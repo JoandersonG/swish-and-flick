@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Swish &amp; Flick</string>
+    <string name="search_intro">Encontre os mais diversos e incríveis produtos que a Swish &amp; Flick tem para você</string>
+    <string name="search_bar">  Buscar</string>
+    <string name="search_previous">Resultados Anteriores</string>
+    <string name="search_results">Resultados:</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

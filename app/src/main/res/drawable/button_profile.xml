@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/perfil_selecionado" android:state_activated="true" /> <!-- pressionado -->
+    <item android:drawable="@drawable/perfil_normal" /> <!-- normal-->
+</selector>

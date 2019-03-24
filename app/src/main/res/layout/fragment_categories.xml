@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.CategoriesFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton9"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:scaleType="fitCenter"
+                android:src="@drawable/category_vestimentas"/>
+
+            <ImageButton
+                android:id="@+id/imageButton10"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                android:layout_marginTop="16dp"
+                android:background="@android:color/white"
+                android:scaleType="fitCenter"
+                android:src="@drawable/category_pocoes"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton11"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/white"
+                android:scaleType="fitCenter"
+                android:src="@drawable/category_quadribol"/>
+
+            <ImageButton
+                android:id="@+id/imageButton12"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/white"
+                android:scaleType="fitCenter"
+                android:src="@drawable/category_hogwarts"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton13"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/white"
+                android:scaleType="fitCenter"
+                android:src="@drawable/category_artefatos_trouxa"/>
+
+            <ImageButton
+                android:id="@+id/imageButton15"
+                android:layout_width="0dp"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/white"
+                android:scaleType="fitCenter"
+                android:src="@drawable/category_artefatos_bruxo"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/imageButton14"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/white"
+                android:scaleType="fitCenter"
+                android:src="@drawable/category_livros"/>
+
+            <ImageButton
+                android:id="@+id/imageButton16"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_weight="1"
+                android:layout_marginTop="8dp"
+                android:background="@android:color/white"
+                android:scaleType="fitCenter"
+                android:src="@drawable/category_joias"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+</ScrollView>

@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/buscar_selecionado" android:state_activated="true" /> <!-- pressionado -->
+    <item android:drawable="@drawable/buscar_normal" /> <!-- normal-->
+</selector>

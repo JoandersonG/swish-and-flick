@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "520780153498",
+    "firebase_url": "https://swish-and-flick.firebaseio.com",
+    "project_id": "swish-and-flick",
+    "storage_bucket": "swish-and-flick.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520780153498:android:ff2a5c7092cc9b49",
+        "android_client_info": {
+          "package_name": "com.example.joanderson.swishflick"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520780153498-549k6gs7em97h1ricds505kmqqeh33ts.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.joanderson.swishflick",
+            "certificate_hash": "a1dda0c0df743156ea546aa1e0269898aa5a4183"
+          }
+        },
+        {
+          "client_id": "520780153498-hlfacrop5ahnbvlid2i286gq5no7cgsb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBc40Fdzzni-mIQ2TqDr4mEBhG8RB_qW20"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520780153498-hlfacrop5ahnbvlid2i286gq5no7cgsb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
