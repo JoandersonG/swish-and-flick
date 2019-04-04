@@ -26,7 +26,7 @@
         android:paddingVertical="5dp">
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardView3"
+            android:id="@+id/cvAdapterHome1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -71,7 +71,7 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardView4"
+            android:id="@+id/cvAdapterHome2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -79,9 +79,9 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             app:cardCornerRadius="5sp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView3"
-            app:layout_constraintEnd_toStartOf="@+id/cardView2"
-            app:layout_constraintStart_toEndOf="@+id/cardView3">
+            app:layout_constraintBottom_toBottomOf="@+id/cvAdapterHome1"
+            app:layout_constraintEnd_toStartOf="@+id/cvAdapterHome3"
+            app:layout_constraintStart_toEndOf="@+id/cvAdapterHome1">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -114,13 +114,13 @@
         </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.CardView
-            android:id="@+id/cardView2"
+            android:id="@+id/cvAdapterHome3"
             android:layout_width="101dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             app:cardCornerRadius="5sp"
-            app:layout_constraintBottom_toBottomOf="@+id/cardView4"
+            app:layout_constraintBottom_toBottomOf="@+id/cvAdapterHome2"
             app:layout_constraintEnd_toEndOf="parent">
 
             <LinearLayout

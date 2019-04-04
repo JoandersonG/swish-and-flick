@@ -83,7 +83,8 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:background="@drawable/profile_photo_background"
-            android:drawableEnd="@drawable/ic_favorite_dark_red_24dp"
+            android:drawableEnd="@drawable/ic_heart_black_24dp"
+            android:drawableRight="@drawable/ic_heart_black_24dp"
             android:paddingHorizontal="7dp"
             android:text="Meus Favoritos"
             app:fontFamily="@font/actor"
@@ -97,6 +98,7 @@
             android:layout_height="70dp"
             android:layout_marginTop="32dp"
             android:background="@drawable/profile_photo_background"
+            android:elevation="15sp"
             android:text="sair"
             app:fontFamily="@font/actor"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -150,6 +152,20 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.5" />
+
+        <Button
+            android:id="@+id/btFragmentProfileAddProducts"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/button_general_purpose"
+            android:fontFamily="@font/actor"
+            android:text="adicionar produtos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button4" />
 
     </android.support.constraint.ConstraintLayout>
 

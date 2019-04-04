@@ -9,6 +9,7 @@
     <!-- TODO: Update blank fragment layout -->
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvCartProducts"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -41,9 +42,9 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/tvFragmentCartTotal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="27dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
@@ -61,13 +62,13 @@
                 android:id="@+id/imageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:src="@drawable/galleon"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintStart_toEndOf="@+id/tvFragmentCartTotal"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
@@ -110,7 +111,8 @@
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.545" />
 
             <TextView
                 android:id="@+id/textView5"

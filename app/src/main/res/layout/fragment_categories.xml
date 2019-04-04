@@ -21,24 +21,24 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton9"
+                android:id="@+id/ibCategoriesClothing"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:layout_marginTop="16dp"
                 android:layout_weight="1"
                 android:background="@android:color/white"
                 android:scaleType="fitCenter"
-                android:src="@drawable/category_vestimentas"/>
+                android:src="@drawable/category_vestimentas" />
 
             <ImageButton
-                android:id="@+id/imageButton10"
+                android:id="@+id/ibCategoriesPotions"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:layout_weight="1"
                 android:layout_marginTop="16dp"
+                android:layout_weight="1"
                 android:background="@android:color/white"
                 android:scaleType="fitCenter"
-                android:src="@drawable/category_pocoes"/>
+                android:src="@drawable/category_pocoes" />
         </LinearLayout>
 
         <LinearLayout
@@ -47,24 +47,24 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton11"
+                android:id="@+id/ibCategoriesQuiddich"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:layout_weight="1"
                 android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:background="@android:color/white"
                 android:scaleType="fitCenter"
-                android:src="@drawable/category_quadribol"/>
+                android:src="@drawable/category_quadribol" />
 
             <ImageButton
-                android:id="@+id/imageButton12"
+                android:id="@+id/ibCategoriesHogwarts"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:layout_weight="1"
                 android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:background="@android:color/white"
                 android:scaleType="fitCenter"
-                android:src="@drawable/category_hogwarts"/>
+                android:src="@drawable/category_hogwarts" />
 
         </LinearLayout>
 
@@ -74,24 +74,24 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton13"
+                android:id="@+id/ibCategoriesMuggleArtefacts"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
-                android:layout_weight="1"
                 android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:background="@android:color/white"
                 android:scaleType="fitCenter"
-                android:src="@drawable/category_artefatos_trouxa"/>
+                android:src="@drawable/category_artefatos_trouxa" />
 
             <ImageButton
-                android:id="@+id/imageButton15"
+                android:id="@+id/ibCategoriesMagicArtefacts"
                 android:layout_width="0dp"
                 android:layout_height="160dp"
-                android:layout_weight="1"
                 android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:background="@android:color/white"
                 android:scaleType="fitCenter"
-                android:src="@drawable/category_artefatos_bruxo"/>
+                android:src="@drawable/category_artefatos_bruxo" />
 
         </LinearLayout>
 
@@ -101,24 +101,24 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageButton14"
+                android:id="@+id/ibCategoriesBooks"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:layout_weight="1"
                 android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:background="@android:color/white"
                 android:scaleType="fitCenter"
-                android:src="@drawable/category_livros"/>
+                android:src="@drawable/category_livros" />
 
             <ImageButton
-                android:id="@+id/imageButton16"
+                android:id="@+id/ibCategoriesJewls"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
-                android:layout_weight="1"
                 android:layout_marginTop="8dp"
+                android:layout_weight="1"
                 android:background="@android:color/white"
                 android:scaleType="fitCenter"
-                android:src="@drawable/category_joias"/>
+                android:src="@drawable/category_joias" />
         </LinearLayout>
     </LinearLayout>
 
