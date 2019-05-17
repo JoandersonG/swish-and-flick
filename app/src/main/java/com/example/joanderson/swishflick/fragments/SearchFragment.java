@@ -45,9 +45,13 @@ public class SearchFragment extends Fragment {
         etSearchbar.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (keyCode == EditorInfo.IME_ACTION_DONE)) {
+                if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER))
+                        || (keyCode == EditorInfo.IME_ACTION_DONE)) {
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("searchData", etSearchbar.getText().toString());
                     fragmentComunicator.fragmentChange("iSearchResultsFragment",
-                            etSearchbar.getText().toString());
+                           bundle);
                     return true;
                 }
                 System.out.println("não entrou");

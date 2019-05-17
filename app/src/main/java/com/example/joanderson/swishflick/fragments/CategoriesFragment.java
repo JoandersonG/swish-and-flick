@@ -46,7 +46,9 @@ public class CategoriesFragment extends Fragment {
         String operation;
 
         if (view.getId() == ibQuiddich.getId()) {
-            ((FragmentComunicator) getActivity()).fragmentChange("iSeeMoreFragment","object");
+            Bundle bundle = new Bundle();
+            bundle.putString("searchData","object seeMore here");
+            ((FragmentComunicator) getActivity()).fragmentChange("iSeeMoreFragment",bundle);
         }
     }
 

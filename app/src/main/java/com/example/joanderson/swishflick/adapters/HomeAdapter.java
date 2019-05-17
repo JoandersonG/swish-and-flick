@@ -1,6 +1,7 @@
 package com.example.joanderson.swishflick.adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentTransaction;
@@ -66,7 +67,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         myViewHolder.cvProduct1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                comunicator.fragmentChange("iProductFragment","object product here");
+                Bundle bundle = new Bundle();
+                bundle.putString("searchData","object product here");
+                comunicator.fragmentChange("iProductFragment", bundle);
             }
         });
 
@@ -86,7 +89,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         myViewHolder.sessionTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                comunicator.fragmentChange("iSeeMoreFragment","object seeMore here");
+                Bundle bundle = new Bundle();
+                bundle.putString("searchData","object seeMore here");
+                comunicator.fragmentChange("iSeeMoreFragment",bundle);
             }
         });
 

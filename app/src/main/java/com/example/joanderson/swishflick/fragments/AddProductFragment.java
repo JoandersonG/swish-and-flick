@@ -12,24 +12,41 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.example.joanderson.swishflick.R;
 import com.example.joanderson.swishflick.helpers.Permissions;
 import com.example.joanderson.swishflick.interfaces.FragmentComunicator;
+import com.example.joanderson.swishflick.models.Cash;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class AddProductFragment extends Fragment {
 
-    FragmentComunicator comunicator;
-    private ImageView imageProduct;
+    private LinearLayout  linearLayoutOfPagesAndPublisher;
+    private TextInputLayout textInputLayoutOfAuthor, textInputLayoutOfMaxSpeed,
+            textInputLayoutOfSize, textInputLayoutOfColor, textInputLayoutOfMlQuantity,
+            textInputLayoutOfEffects, textInputLayoutOfPriceKnut, textInputLayoutOfPriceSickle,
+            textInputLayoutOfPriceGalleon;
+    private Spinner spinnerCategory;
+    private EditText title, description, pages, publisher, author, maxSpeed, size, color,
+            mlQuantity, effects, galleon, sickle, knut;
+    private static ImageView imageProduct;
     private FragmentComunicator fragmentComunicator;
+    private String[] spinnerCategories;
     private String[] permissions = new String[] {
             Manifest.permission.READ_EXTERNAL_STORAGE
     };
@@ -45,12 +62,9 @@ public class AddProductFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_add_product, container, false);
 
-        fragmentComunicator = (FragmentComunicator) getActivity();
-        imageProduct = view.findViewById(R.id.ivAddProductFragment);
-        comunicator = (FragmentComunicator) getActivity();
-        if (getArguments() != null) {
-            //todo: continuar daqui
-        }
+        loadViewIds(view);
+        loadSpinnerValues();
+        loadLayoutSpinnerBased("Book");
         imageProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,12 +72,157 @@ public class AddProductFragment extends Fragment {
             }
         });
 
+        spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String current = getResources().getStringArray(R.array.categoriesEN)[position];
+                loadLayoutSpinnerBased(current);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                spinnerCategory.setSelection(0);
+            }
+        });
+        spinnerCategory.setSelection(0);
+
         //validate permissions:
         Permissions.validatePermissions(permissions,getActivity(),1);
 
         return view;
     }
 
+    public void validateData (View view) {
+        String category = spinnerCategory.getSelectedItem().toString();
+        String title = this.title.getText().toString();
+        String description = this.description.toString();
+        int galleon = Integer.valueOf(this.galleon.toString());
+        int sickle = Integer.valueOf(this.sickle.toString());
+        int knut = Integer.valueOf(this.knut.toString());
+
+        if ( (boolean) imageProduct.getTag() ) {
+            if( !title.isEmpty()) {
+                if( !description.isEmpty()) {
+                    if(galleon != 0 || sickle != 0 || knut != 0) {
+                        //agora vem as validações específicas
+
+                    }
+                    else {
+                        printErrorMessage("Por favor, insira o preço");
+                    }
+                }
+                else {
+                    printErrorMessage("Por favor, insira a descrição");
+                }
+            }
+            else {
+                printErrorMessage("Por favor, insira o título");
+            }
+        }
+        else {
+            printErrorMessage("Por Favor, insira a imagem");
+        }
+
+
+    }
+
+    private void printErrorMessage(String mensagem) {
+        Toast.makeText(getContext() , mensagem, Toast.LENGTH_SHORT).show();
+    }
+
+    private void loadLayoutSpinnerBased(String spinner) {
+
+        if (spinner.equals("Broomstick")) {
+            maxSpeed.setVisibility(EditText.VISIBLE);
+            textInputLayoutOfMaxSpeed.setVisibility(TextInputLayout.VISIBLE);
+        }
+        else {
+            maxSpeed.setVisibility(EditText.GONE);
+            textInputLayoutOfMaxSpeed.setVisibility(TextInputLayout.GONE);
+        }
+        if (spinner.equals("Clothing") || spinner.equals("Broomstick")) {
+            size.setVisibility(EditText.VISIBLE);
+            textInputLayoutOfSize.setVisibility(TextInputLayout.VISIBLE);
+        }
+        else {
+            size.setVisibility(EditText.GONE);
+            textInputLayoutOfSize.setVisibility(TextInputLayout.GONE);
+        }
+        if (spinner.equals("Clothing")) {
+            color.setVisibility(EditText.VISIBLE);
+            textInputLayoutOfColor.setVisibility(TextInputLayout.VISIBLE);
+        }
+        else {
+            color.setVisibility(EditText.GONE);
+            textInputLayoutOfColor.setVisibility(TextInputLayout.GONE);
+        }
+        if (spinner.equals("Potion")) {
+            mlQuantity.setVisibility(EditText.VISIBLE);
+            textInputLayoutOfMlQuantity.setVisibility(TextInputLayout.VISIBLE);
+            effects.setVisibility(EditText.VISIBLE);
+            textInputLayoutOfEffects.setVisibility(TextInputLayout.VISIBLE);
+        }
+        else {
+            mlQuantity.setVisibility(EditText.GONE);
+            textInputLayoutOfMlQuantity.setVisibility(TextInputLayout.GONE);
+            effects.setVisibility(EditText.GONE);
+            textInputLayoutOfEffects.setVisibility(TextInputLayout.GONE);
+        }
+
+        if (spinner.equals("Book")) {
+            pages.setVisibility(EditText.VISIBLE);
+            publisher.setVisibility(EditText.VISIBLE);
+            author.setVisibility(EditText.VISIBLE);
+            linearLayoutOfPagesAndPublisher.setVisibility(LinearLayout.VISIBLE);
+            textInputLayoutOfAuthor.setVisibility(TextInputLayout.VISIBLE);
+        }
+        else {
+            pages.setVisibility(EditText.GONE);
+            publisher.setVisibility(EditText.GONE);
+            author.setVisibility(EditText.GONE);
+            linearLayoutOfPagesAndPublisher.setVisibility(LinearLayout.GONE);
+            textInputLayoutOfAuthor.setVisibility(TextInputLayout.GONE);
+        }
+    }
+
+    private void loadViewIds(View view) {
+        fragmentComunicator = (FragmentComunicator) getActivity();
+        imageProduct = view.findViewById(R.id.ivAddProductFragment);
+        spinnerCategory = view.findViewById(R.id.spinnerFragAddProductCategory);
+        title = view.findViewById(R.id.etFragAddProductTitle);
+        description = view.findViewById(R.id.etFragAddProductDescription);
+        pages = view.findViewById(R.id.etFragAddProductPages);
+        publisher = view.findViewById(R.id.etFragAddProductPublisher);
+        author = view.findViewById(R.id.etFragAddProductAuthor);
+        maxSpeed = view.findViewById(R.id.etFragAddProductMaxSpeed);
+        size = view.findViewById(R.id.etFragAddProductSize);
+        color = view.findViewById(R.id.etFragAddProductColor);
+        mlQuantity = view.findViewById(R.id.etFragAddProductMlQuantity);
+        effects = view.findViewById(R.id.etFragAddProductEffects);
+        galleon = view.findViewById(R.id.etFragAddPriceGalleon);
+        sickle = view.findViewById(R.id.etFragAddPriceSickle);
+        knut = view.findViewById(R.id.etFragAddPriceKnut);
+        textInputLayoutOfPriceGalleon = view.findViewById(R.id.textInputLayoutOfPriceGalleon);
+        textInputLayoutOfPriceKnut = view.findViewById(R.id.textInputLayoutOfPriceKnut);
+        textInputLayoutOfPriceSickle = view.findViewById(R.id.textInputLayoutOfPriceSickle);
+        textInputLayoutOfAuthor = view.findViewById(R.id.textInputLayoutOfAuthor);
+        textInputLayoutOfEffects = view.findViewById(R.id.textInputLayoutOfEffects);
+        textInputLayoutOfMlQuantity = view.findViewById(R.id.textInputLayoutOfMlQuantity);
+        textInputLayoutOfColor = view.findViewById(R.id.textInputLayoutOfColor);
+        textInputLayoutOfMaxSpeed = view.findViewById(R.id.textInputLayoutOfMaxSpeed);
+        textInputLayoutOfSize = view.findViewById(R.id.textInputLayoutOfSize);
+        linearLayoutOfPagesAndPublisher = view.findViewById(R.id.linearLayoutOfPagesAndPublisher);
+        spinnerCategories = getResources().getStringArray(R.array.categories);
+        imageProduct.setTag(false);
+    }
+
+    private void loadSpinnerValues() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+                getContext(), android.R.layout.simple_spinner_item, spinnerCategories);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+         spinnerCategory.setAdapter(adapter);
+
+    }
 
     public void pickImage(int requestCode) {
         Intent i = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -96,16 +255,13 @@ public class AddProductFragment extends Fragment {
         dialog.show();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
+    public static void activityResultImagePick(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
-
             //recover image
             Uri imagePicked = data.getData();
             String imagePath = imagePicked.toString();
             imageProduct.setImageURI(imagePicked);
+            imageProduct.setTag(true);
         }
     }
 

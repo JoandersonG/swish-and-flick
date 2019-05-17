@@ -113,18 +113,17 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
         else {
             //TODO: erro;
         }
-        Bundle bundle = new Bundle();
-
         fragmentTransaction.commit();
     }
 
     @Override
-    public void fragmentChange(String operation, String data) {
+    public void fragmentChange(String operation, Bundle data) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         switch (operation) {
             case "iSearchResultsFragment":
                 SearchResultsFragment searchResultsFragment = new SearchResultsFragment();
-                searchResultsFragment.setSearchString(data);
+                String search = data.getString("searchData","");
+                searchResultsFragment.setSearchString(search);
                 fragmentTransaction.replace(R.id.main_frame,searchResultsFragment);
                 break;
             case "iProductFragment":
@@ -142,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
                 break;
             case "fAddProductFragment":
                 ProfileFragment profileFragment = new ProfileFragment();
-                profileFragment.setArguments(bundle);
                 fragmentTransaction.replace(R.id.main_frame,profileFragment);
             default:
                 //todo: {erro: fragment não encontrada}
@@ -150,8 +148,8 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
         fragmentTransaction.commit();
     }
 
-    @Override
-    public Object activityChange(String operation) {
+
+    public void activityChange(String operation) {
 
         switch (operation) {
             case "iPhotoPicker":
@@ -159,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
                 startActivityForResult(i, 1);
                 break;
             default:
-                //todo: {erro: comando não encontrado
+                //todo: {erro: comando não encontrado}
         }
     }
 
@@ -261,10 +259,6 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == Activity.RESULT_OK) {
-
-            System.out.println("entrou no onActivityResult");
-
-        }
+        AddProductFragment.activityResultImagePick(requestCode,resultCode, data);
     }
 }

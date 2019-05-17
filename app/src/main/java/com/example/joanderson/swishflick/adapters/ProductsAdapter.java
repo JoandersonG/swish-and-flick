@@ -1,5 +1,6 @@
 package com.example.joanderson.swishflick.adapters;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -33,7 +34,9 @@ public class ProductsAdapter extends RecyclerView.Adapter<ProductsAdapter.MyView
             @Override
             public void onClick(View v) {
                 //iniciar uma fragment
-                comunicator.fragmentChange("iProductFragment","objeto produto");
+                Bundle bundle = new Bundle();
+                bundle.putString("searchData","object seeMore here");
+                comunicator.fragmentChange("iProductFragment",bundle);
             }
         });
     }

@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:layout_marginBottom="16dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
 
@@ -25,143 +26,256 @@
             android:src="@drawable/produto_sem_imagem" />
 
         <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp" />
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/spinnerFragAddProductCategory"
+            android:layout_width="250dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
-            android:ems="10"
-            android:hint="Título"
-            android:maxLines="2"
-            android:inputType="textPersonName" />
+            android:gravity="center" />
 
-        <EditText
-            android:id="@+id/editText2"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
-            android:ems="10"
-            android:hint="Descrição"
-            android:inputType="textPersonName" />
+            android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/editText3"
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etFragAddProductTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_weight="17"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
                 android:ems="10"
-                android:hint="Páginas"
+                android:hint="Título"
+                android:maxLines="2"
+                android:inputType="textPersonName" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etFragAddProductDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Descrição"
+                android:minLines="1"
+                android:background="@drawable/common_google_signin_btn_icon_light_normal_background"/>
+        </android.support.design.widget.TextInputLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearLayoutOfPagesAndPublisher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/etFragAddProductPages"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                        android:ems="10"
+                        android:hint="Páginas"
+                        android:inputType="number" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4">
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/etFragAddProductPublisher"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                        android:ems="10"
+                        android:hint="Editora"
+                        android:inputType="textPersonName" />
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutOfAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/etFragAddProductAuthor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                    android:ems="10"
+                    android:hint="Autor"
+                    android:inputType="textPersonName" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutOfMaxSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etFragAddProductMaxSpeed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                android:ems="10"
+                android:hint="Velocidade Máxima"
                 android:inputType="number" />
+        </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editText5"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayoutOfSize"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/etFragAddProductSize"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                        android:ems="10"
+                        android:hint="Tamanho"
+                        android:inputType="textPersonName" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/textInputLayoutOfColor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/etFragAddProductColor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                        android:ems="10"
+                        android:hint="Cor"
+                        android:inputType="textPersonName" />
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutOfMlQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etFragAddProductMlQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
                 android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
                 android:ems="10"
-                android:hint="Editora"
+                android:hint="Quantidade (ml)"
+                android:inputType="numberDecimal" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/textInputLayoutOfEffects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/etFragAddProductEffects"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                android:ems="10"
+                android:hint="Efeitos"
                 android:inputType="textPersonName" />
-        </LinearLayout>
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editText4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
-            android:ems="10"
-            android:hint="Autor"
-            android:inputType="textPersonName" />
-
-        <EditText
-            android:id="@+id/editText6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
-            android:ems="10"
-            android:hint="Velocidade Máxima"
-            android:inputType="number" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/editText7"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayoutOfPriceGalleon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
-                android:ems="10"
-                android:hint="Tamanho"
-                android:inputType="textPersonName" />
+                android:layout_weight="1">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/etFragAddPriceGalleon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                    android:ems="10"
+                    android:hint="Galeões"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:id="@+id/editText8"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayoutOfPriceSickle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
-                android:ems="10"
-                android:hint="Cor"
-                android:inputType="textPersonName" />
+                android:layout_weight="1">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/etFragAddPriceSickle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                    android:ems="10"
+                    android:hint="Sicles"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayoutOfPriceKnut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/etFragAddPriceKnut"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
+                    android:ems="10"
+                    android:hint="Nuques"
+                    android:inputType="number" />
+            </android.support.design.widget.TextInputLayout>
+
         </LinearLayout>
-
-        <EditText
-            android:id="@+id/editText9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
-            android:ems="10"
-            android:hint="Quantidade (ml)"
-            android:inputType="numberDecimal" />
-
-        <EditText
-            android:id="@+id/editText10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/common_google_signin_btn_icon_light_normal_background"
-            android:ems="10"
-            android:hint="Efeitos"
-            android:inputType="textPersonName" />
-
         <Button
-            android:id="@+id/button6"
+            android:id="@+id/btFragAddProduct"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:layout_marginBottom="16dp"
             android:background="@color/colorPrimaryDark"
             android:textColor="@color/colorWhite"
             android:text="adicionar produto" />
 
     </LinearLayout>
+
 </ScrollView>
