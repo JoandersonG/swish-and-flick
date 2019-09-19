@@ -28,8 +28,10 @@ import android.widget.Toast;
 
 import com.example.joanderson.swishflick.R;
 import com.example.joanderson.swishflick.helpers.Permissions;
+import com.example.joanderson.swishflick.helpers.Validations;
 import com.example.joanderson.swishflick.interfaces.FragmentComunicator;
 import com.example.joanderson.swishflick.models.Cash;
+import com.example.joanderson.swishflick.models.product.Book;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -93,7 +95,71 @@ public class AddProductFragment extends Fragment {
     }
 
     public void validateData (View view) {
+        //todo: implementar stock amount
         String category = spinnerCategory.getSelectedItem().toString();
+        switch (category) {
+            case "Book":
+                //String name, String description, Cash price, int stockAmount,
+                //                int pagesAmount, String author, String publisher
+                Book book = new Book(
+                        title.getText().toString(),
+                        description.getText().toString(),
+                        new Cash(Integer.getInteger(galleon.getText().toString()),
+                                Integer.getInteger(sickle.getText().toString()),
+                                        Integer.getInteger(knut.getText().toString())),
+                        10,
+                        Integer.getInteger(pages.getText().toString()),
+                        author.getText().toString(),
+                        publisher.getText().toString()
+
+                );
+                int resultMessage = Validations.validateBook(book);
+                if (resultMessage != 0) {
+                    printErrorMessage(getString(resultMessage));
+                }
+                else {
+                    //tudo certo, posso enviar para o banco
+                }
+        }
+        /////////////////////////////////////////////////////
+        if ( !(boolean) imageProduct.getTag() ) {
+            printErrorMessage(getString(R.string.validation_error_empty_image));
+        }
+        if (title.getText().toString().isEmpty()) {
+            printErrorMessage(getString(R.string.validation_error_empty_title));
+        }
+        if (description.getText().toString().isEmpty()) {
+            printErrorMessage(getString(R.string.validation_error_empty_description));
+        }
+        if (galleon.getText().toString().isEmpty()
+                && sickle.getText().toString().isEmpty()
+                && knut.getText().toString().isEmpty()) {
+            printErrorMessage(getString(R.string.validation_error_empty_price));
+        }
+        //todo: try and catch for this(?):
+        if (Integer.getInteger(galleon.getText().toString()) < 0
+                || Integer.getInteger(sickle.getText().toString()) < 0
+                || Integer.getInteger(knut.getText().toString()) < 0) {
+            printErrorMessage(getString(R.string.validation_error_invalid_price));
+        }
+
+        //agora vêm as especificidades
+
+        switch (category) {
+            // Integer.getInteger(pages.getText().toString()),
+            //                        author.getText().toString(),
+            //                        publisher.getText().toString()
+            case "Book":
+                if (pages.getText().toString().isEmpty() || Integer.getInteger(pages.getText().toString())  <= 0) {
+                    printErrorMessage(getString(R.string.validation_error_empty_pages));
+                }
+                break;
+
+            case "Broomstick":
+                //todo: continuar daqui
+        }
+
+
         String title = this.title.getText().toString();
         String description = this.description.toString();
         int galleon = Integer.valueOf(this.galleon.toString());
@@ -105,7 +171,29 @@ public class AddProductFragment extends Fragment {
                 if( !description.isEmpty()) {
                     if(galleon != 0 || sickle != 0 || knut != 0) {
                         //agora vem as validações específicas
+                        if (category.equals("Book")) {
+                            String pages = this.pages.toString();
+                            String publisher = this.publisher.toString();
+                            String author = this.author.toString();
 
+                            if (!pages.isEmpty()) {
+                                if (!publisher.isEmpty()) {
+                                    if (!author.isEmpty()) {
+                                        //tudo certo, envia para a nuvem
+                                    }
+                                    else {
+                                        printErrorMessage("Por favor, insira o autor");
+                                    }
+                                }
+                                else {
+                                    printErrorMessage("Por favor, insira a editora");
+                                }
+                            }
+                            else {
+                                printErrorMessage("Por favor, insira o número de páginas");
+                            }
+                        }
+                        //TODO: continuar as validações aqui
                     }
                     else {
                         printErrorMessage("Por favor, insira o preço");
@@ -122,7 +210,7 @@ public class AddProductFragment extends Fragment {
         else {
             printErrorMessage("Por Favor, insira a imagem");
         }
-
+*/
 
     }
 

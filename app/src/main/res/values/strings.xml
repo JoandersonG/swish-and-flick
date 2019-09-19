@@ -4,10 +4,29 @@
     <string name="search_bar">  Buscar</string>
     <string name="search_previous">Resultados Anteriores</string>
     <string name="search_results">Resultados:</string>
+    
+    <!-- Bottom Navigation Bar Button names -->
+    <string name="bottom_bar_home">Home</string>
+    <string name="bottom_bar_categories">Categorias</string>
+    <string name="bottom_bar_search">Buscar</string>
+    <string name="bottom_bar_profile">Perfil</string>
+    <string name="bottom_bar_cart">Carrinho</string>
+
+
+    <!-- Errors in Validations -->
+    <string name="validation_error_empty_title">Insira um título</string>
+    <string name="validation_error_empty_description">Insira uma descrição</string>
+    <string name="validation_error_empty_pages">Número de páginas inválido</string>
+    <string name="validation_error_empty_publisher">Insira a editora</string>
+    <string name="validation_error_empty_author">Insira o nome do autor</string>
+    <string name="validation_error_empty_price">Insira um preço válido</string>
+    <string name="validation_error_empty_image">Insira uma imagem</string>
+    <string name="validation_error_invalid_price">Insira um preço válido</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    
+
     <string-array name="categories">
         <item>Livro</item>
         <item>Vassoura</item>

@@ -10,7 +10,7 @@ public class Book extends Product {
     private int pagesAmount;
     private String author;
     private  String publisher;
-
+//todo: validations and throw exceptions
     public Book(String name, String description, Cash price, int stockAmount,
                 int pagesAmount, String author, String publisher) {
         super(name, description, price, stockAmount);

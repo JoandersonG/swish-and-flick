@@ -25,14 +25,14 @@ public class AddProductsImageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_products_image);
-
+/*
         iv1 = findViewById(R.id.imageView6);
         iv2 = findViewById(R.id.imageView7);
         iv3 = findViewById(R.id.imageView8);
         iv4 = findViewById(R.id.imageView9);
         iv5 = findViewById(R.id.imageView10);
         bt1 = findViewById(R.id.buttonSend);
-
+*///todo: resolver isso aqui
         bt1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

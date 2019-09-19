@@ -7,9 +7,12 @@ import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
@@ -44,6 +47,7 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity implements FragmentComunicator {
 
     ImageButton ibHome, ibCategories, ibProfile, ibSearch, ibCart;
+    private BottomNavigationView bottom_navigation;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     private StorageReference storageReference = FirebaseStorage.getInstance().getReference();
 
@@ -52,22 +56,57 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         ibHome = findViewById(R.id.ibHome);
         ibCategories = findViewById(R.id.ibCategories);
         ibProfile = findViewById(R.id.ibProfile);
         ibSearch = findViewById(R.id.ibSearch);
         ibCart = findViewById(R.id.ibCart);
 
+        bottom_navigation = findViewById(R.id.bottom_navigation);
+        bottom_navigation.setOnNavigationItemSelectedListener(navListener);
 
 //        writeNewUser("user1","Joanderson", "joanderson@ufba.br");
        //addProductsToDatabase();
         //addMainSetProducts();
 
         //inicia onCreate
-        buttonActivate(ibHome);
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,
+                new HomeFragment()).commit();
+        //buttonActivate(ibHome);
 
     }
 
+    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    Fragment selectedFragment = null;
+
+                    switch (menuItem.getItemId()) {
+                        case R.id.nav_home:
+                            selectedFragment = new HomeFragment();
+                            break;
+
+                        case R.id.nav_categories:
+                            selectedFragment = new CategoriesFragment();
+                            break;
+                        case R.id.nav_search:
+                            selectedFragment = new SearchFragment();
+                            break;
+                        case R.id.nav_profile:
+                            selectedFragment = new ProfileFragment();
+                            break;
+                        case R.id.nav_cart:
+                            selectedFragment = new CartFragment();
+                            break;
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,
+                            selectedFragment).commit();
+                    return true;
+                };
+            };
 
     public void buttonActivate(View v){
         if (v.isActivated()) {
@@ -81,8 +120,9 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
 
         v.setActivated(true);
 
-        loadFragment(v);
+        //loadFragment(v);
     }
+
 
     public void loadFragment(View v) {
         ImageButton ib = (ImageButton) v;
@@ -91,24 +131,25 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
         if (ib.getId() == ibHome.getId()) {
             //carrega fragment home
             HomeFragment homeFragment = new HomeFragment();
-            fragmentTransaction.replace(R.id.main_frame, homeFragment);
+            //fragmentTransaction.setPrimaryNavigationFragment(homeFragment);
+            fragmentTransaction.add(R.id.main_frame, homeFragment);
         }
         else if (ib.getId() == ibCategories.getId()) {
             CategoriesFragment categoriesFragment = new CategoriesFragment();
-            fragmentTransaction.replace(R.id.main_frame, categoriesFragment);
+            fragmentTransaction.add(R.id.main_frame, categoriesFragment);
         }
         else if (ib.getId() == ibSearch.getId()) {
             SearchFragment searchFragment = new SearchFragment();
-            fragmentTransaction.replace(R.id.main_frame, searchFragment);
+            fragmentTransaction.add(R.id.main_frame, searchFragment);
 
         }
         else if (ib.getId() == ibProfile.getId()) {
             ProfileFragment profileFragment = new ProfileFragment();
-            fragmentTransaction.replace(R.id.main_frame, profileFragment);
+            fragmentTransaction.add(R.id.main_frame, profileFragment);
         }
         else if (ib.getId() == ibCart.getId()) {
             CartFragment cartFragment = new CartFragment();
-            fragmentTransaction.replace(R.id.main_frame, cartFragment);
+            fragmentTransaction.add(R.id.main_frame, cartFragment);
         }
         else {
             //TODO: erro;
