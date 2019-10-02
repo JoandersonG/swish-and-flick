@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.example.joanderson.swishflick.R;
 import com.example.joanderson.swishflick.adapters.HomeAdapter;
@@ -21,6 +22,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
 
@@ -29,6 +32,8 @@ import java.util.ArrayList;
  */
 public class HomeFragment extends Fragment {
 
+    CarouselView carouselView;
+    int[] sampleImages = {R.drawable.image_1, R.drawable.image_2, R.drawable.image_3};
     private RecyclerView recyclerView;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
     ArrayList <HomeFragmentItem> hfis = new ArrayList<>();
@@ -44,7 +49,7 @@ public class HomeFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        recyclerView = view.findViewById(R.id.recyclerHome);
+        recyclerView = view.findViewById(R.id.recyclerFragmentHome);
 
         //configurando adapter
         //HomeFragmentItem item;
@@ -58,7 +63,17 @@ public class HomeFragment extends Fragment {
         recyclerView.setNestedScrollingEnabled(false);
         recyclerView.setAdapter(homeAdapter);
 
+        carouselView = (CarouselView) view.findViewById(R.id.carouselView);
+        carouselView.setPageCount(sampleImages.length);
+        carouselView.setImageListener(imageListener);
         return view;
     }
+
+    ImageListener imageListener = new ImageListener() {
+        @Override
+        public void setImageForPosition(int position, ImageView imageView) {
+            imageView.setImageResource(sampleImages[position]);
+        }
+    };
 
 }

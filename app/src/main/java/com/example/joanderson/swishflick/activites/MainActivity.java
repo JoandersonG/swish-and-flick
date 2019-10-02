@@ -44,8 +44,7 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements FragmentComunicator {
 
-    CarouselView carouselView;
-    int[] sampleImages = {R.drawable.image_1, R.drawable.image_2, R.drawable.image_3};
+
 
     ImageButton ibHome, ibCategories, ibProfile, ibSearch, ibCart;
     private BottomNavigationView bottom_navigation;
@@ -71,21 +70,14 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
         //addMainSetProducts();
 
         //inicia onCreate
-        getSupportFragmentManager().beginTransaction().replace(R.id.section_frame_home,
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_principal,
                 new HomeFragment()).commit();
         //buttonActivate(ibHome);
 
-        carouselView = (CarouselView) findViewById(R.id.carouselView);
-        carouselView.setPageCount(sampleImages.length);
-        carouselView.setImageListener(imageListener);
+
     }
 
-    ImageListener imageListener = new ImageListener() {
-        @Override
-        public void setImageForPosition(int position, ImageView imageView) {
-            imageView.setImageResource(sampleImages[position]);
-        }
-    };
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
