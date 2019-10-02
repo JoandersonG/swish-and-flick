@@ -8,7 +8,7 @@ public abstract class Validations {
 
     public static int validateBook (Book book) {
         //int result = validate(book.getName());
-        if (result != 0) return result;
+        /*if (result != 0) return result;
         if (book.getName().isEmpty()) {
             return R.string.validation_error_empty_title;
         }
@@ -17,7 +17,7 @@ public abstract class Validations {
         }
         if (book.getPagesAmount()  >= 0) {
             //return false;
-        }
+        }*/
         return 0;
     }
 

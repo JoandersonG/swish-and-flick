@@ -100,7 +100,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return 1;
+        return 4;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -116,17 +116,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
             sessionTitle = itemView.findViewById(R.id.tvHomeTitle);
             productImage1 = itemView.findViewById(R.id.ivProduct1);
-            productName1 = itemView.findViewById(R.id.tvProduct1);
             productPrice1 = itemView.findViewById(R.id.tvPrice1);
             cvProduct1 = itemView.findViewById(R.id.cvAdapterHome1);
 
             productImage2 = itemView.findViewById(R.id.ivProduct2);
-            productName2 = itemView.findViewById(R.id.tvProduct2);
             productPrice2 = itemView.findViewById(R.id.tvPrice2);
             cvProduct2 = itemView.findViewById(R.id.cvAdapterHome2);
 
             productImage3 = itemView.findViewById(R.id.ivProduct3);
-            productName3 = itemView.findViewById(R.id.tvProduct3);
             productPrice3 = itemView.findViewById(R.id.tvPrice3);
             cvProduct3 = itemView.findViewById(R.id.cvAdapterHome3);
 

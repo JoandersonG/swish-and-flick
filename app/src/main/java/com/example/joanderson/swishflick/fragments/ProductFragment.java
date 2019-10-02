@@ -46,6 +46,7 @@ public class ProductFragment extends Fragment {
     }
 
     public void showSizeMenu(View view) {
+        //todo: mudar isso para spinner
         PopupMenu popupMenu = new PopupMenu(context, view);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.popup_size_menu,popupMenu.getMenu());

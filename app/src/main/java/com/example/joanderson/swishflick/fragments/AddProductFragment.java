@@ -210,7 +210,7 @@ public class AddProductFragment extends Fragment {
         else {
             printErrorMessage("Por Favor, insira a imagem");
         }
-*/
+
 
     }
 

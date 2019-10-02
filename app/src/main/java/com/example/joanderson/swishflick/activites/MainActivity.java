@@ -1,12 +1,8 @@
 package com.example.joanderson.swishflick.activites;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.PersistableBundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -15,6 +11,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import com.example.joanderson.swishflick.R;
 import com.example.joanderson.swishflick.fragments.AddProductFragment;
@@ -31,7 +28,6 @@ import com.example.joanderson.swishflick.models.Cash;
 import com.example.joanderson.swishflick.models.HomeFragmentItem;
 import com.example.joanderson.swishflick.models.product.Book;
 import com.example.joanderson.swishflick.models.product.Product;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,11 +36,16 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.synnapps.carouselview.CarouselView;
+import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements FragmentComunicator {
+
+    CarouselView carouselView;
+    int[] sampleImages = {R.drawable.image_1, R.drawable.image_2, R.drawable.image_3};
 
     ImageButton ibHome, ibCategories, ibProfile, ibSearch, ibCart;
     private BottomNavigationView bottom_navigation;
@@ -55,15 +56,13 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
+/*
         ibHome = findViewById(R.id.ibHome);
         ibCategories = findViewById(R.id.ibCategories);
         ibProfile = findViewById(R.id.ibProfile);
         ibSearch = findViewById(R.id.ibSearch);
         ibCart = findViewById(R.id.ibCart);
-
+*/
         bottom_navigation = findViewById(R.id.bottom_navigation);
         bottom_navigation.setOnNavigationItemSelectedListener(navListener);
 
@@ -72,11 +71,21 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
         //addMainSetProducts();
 
         //inicia onCreate
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,
+        getSupportFragmentManager().beginTransaction().replace(R.id.section_frame_home,
                 new HomeFragment()).commit();
         //buttonActivate(ibHome);
 
+        carouselView = (CarouselView) findViewById(R.id.carouselView);
+        carouselView.setPageCount(sampleImages.length);
+        carouselView.setImageListener(imageListener);
     }
+
+    ImageListener imageListener = new ImageListener() {
+        @Override
+        public void setImageForPosition(int position, ImageView imageView) {
+            imageView.setImageResource(sampleImages[position]);
+        }
+    };
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -102,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
                             selectedFragment = new CartFragment();
                             break;
                     }
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_frame,
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_principal,
                             selectedFragment).commit();
                     return true;
                 };
@@ -132,24 +141,24 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
             //carrega fragment home
             HomeFragment homeFragment = new HomeFragment();
             //fragmentTransaction.setPrimaryNavigationFragment(homeFragment);
-            fragmentTransaction.add(R.id.main_frame, homeFragment);
+            fragmentTransaction.add(R.id.frame_principal, homeFragment);
         }
         else if (ib.getId() == ibCategories.getId()) {
             CategoriesFragment categoriesFragment = new CategoriesFragment();
-            fragmentTransaction.add(R.id.main_frame, categoriesFragment);
+            fragmentTransaction.add(R.id.frame_principal, categoriesFragment);
         }
         else if (ib.getId() == ibSearch.getId()) {
             SearchFragment searchFragment = new SearchFragment();
-            fragmentTransaction.add(R.id.main_frame, searchFragment);
+            fragmentTransaction.add(R.id.frame_principal, searchFragment);
 
         }
         else if (ib.getId() == ibProfile.getId()) {
             ProfileFragment profileFragment = new ProfileFragment();
-            fragmentTransaction.add(R.id.main_frame, profileFragment);
+            fragmentTransaction.add(R.id.frame_principal, profileFragment);
         }
         else if (ib.getId() == ibCart.getId()) {
             CartFragment cartFragment = new CartFragment();
-            fragmentTransaction.add(R.id.main_frame, cartFragment);
+            fragmentTransaction.add(R.id.frame_principal, cartFragment);
         }
         else {
             //TODO: erro;
@@ -165,24 +174,24 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
                 SearchResultsFragment searchResultsFragment = new SearchResultsFragment();
                 String search = data.getString("searchData","");
                 searchResultsFragment.setSearchString(search);
-                fragmentTransaction.replace(R.id.main_frame,searchResultsFragment);
+                fragmentTransaction.replace(R.id.frame_principal,searchResultsFragment);
                 break;
             case "iProductFragment":
                 ProductFragment productFragment = new ProductFragment();
                 productFragment.setProduct("this is a product");
-                fragmentTransaction.replace(R.id.main_frame,productFragment);
+                fragmentTransaction.replace(R.id.frame_principal,productFragment);
                 break;
             case "iSeeMoreFragment":
                 HomeSeeMoreFragment seeMoreFragment = new HomeSeeMoreFragment();
-                fragmentTransaction.replace(R.id.main_frame,seeMoreFragment);
+                fragmentTransaction.replace(R.id.frame_principal,seeMoreFragment);
                 break;
             case "iAddProductFragment":
                 AddProductFragment addProductFragment = new AddProductFragment();
-                fragmentTransaction.replace(R.id.main_frame,addProductFragment);
+                fragmentTransaction.replace(R.id.frame_principal,addProductFragment);
                 break;
             case "fAddProductFragment":
                 ProfileFragment profileFragment = new ProfileFragment();
-                fragmentTransaction.replace(R.id.main_frame,profileFragment);
+                fragmentTransaction.replace(R.id.frame_principal,profileFragment);
             default:
                 //todo: {erro: fragment não encontrada}
         }
