@@ -7,6 +7,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
 */
 
-
+/*
         myViewHolder.cvProduct1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,13 +95,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                 comunicator.fragmentChange("iSeeMoreFragment",bundle);
             }
         });
-
+*/
+        System.out.println("onBindViewHolder: calld " + i + "times");
 
     }
 
     @Override
     public int getItemCount() {
-        return 5;
+        return 15;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
