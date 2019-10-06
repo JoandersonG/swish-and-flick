@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.example.joanderson.swishflick.models.Cash;
 
+import java.util.ArrayList;
 
 
 public class Broomstick extends Product {
@@ -12,6 +13,16 @@ public class Broomstick extends Product {
 
     public Broomstick(String name, String description, Cash price, int stockAmount, int maxSpeed) {
         super(name, description, price, stockAmount);
+        this.maxSpeed = maxSpeed;
+    }
+
+    public Broomstick(String name, String description, Cash price, int stockAmount, ArrayList<String> magicProperties, int maxSpeed) {
+        super(name, description, price, stockAmount, magicProperties);
+        this.maxSpeed = maxSpeed;
+    }
+
+    public Broomstick(String name, String description, Cash price, int stockAmount, Boolean isMagicProduct, int maxSpeed) {
+        super(name, description, price, stockAmount, isMagicProduct);
         this.maxSpeed = maxSpeed;
     }
 

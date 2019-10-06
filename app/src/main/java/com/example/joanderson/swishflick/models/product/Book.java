@@ -4,6 +4,8 @@ import android.support.annotation.Nullable;
 
 import com.example.joanderson.swishflick.models.Cash;
 
+import java.util.ArrayList;
+
 
 public class Book extends Product {
 
@@ -14,6 +16,20 @@ public class Book extends Product {
     public Book(String name, String description, Cash price, int stockAmount,
                 int pagesAmount, String author, String publisher) {
         super(name, description, price, stockAmount);
+        this.pagesAmount = pagesAmount;
+        this.author = author;
+        this.publisher = publisher;
+    }
+
+    public Book(String name, String description, Cash price, int stockAmount, ArrayList<String> magicProperties, int pagesAmount, String author, String publisher) {
+        super(name, description, price, stockAmount, magicProperties);
+        this.pagesAmount = pagesAmount;
+        this.author = author;
+        this.publisher = publisher;
+    }
+
+    public Book(String name, String description, Cash price, int stockAmount, Boolean isMagicProduct, int pagesAmount, String author, String publisher) {
+        super(name, description, price, stockAmount, isMagicProduct);
         this.pagesAmount = pagesAmount;
         this.author = author;
         this.publisher = publisher;

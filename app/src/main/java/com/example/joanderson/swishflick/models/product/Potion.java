@@ -20,6 +20,24 @@ public class Potion extends Product {
         this.effects = new ArrayList<>();
     }
 
+    public Potion(String name, String description, Cash price, int stockAmount, int mlQuantity, ArrayList<String> effects) {
+        super(name, description, price, stockAmount);
+        this.mlQuantity = mlQuantity;
+        this.effects = effects;
+    }
+
+    public Potion(String name, String description, Cash price, int stockAmount, ArrayList<String> magicProperties, int mlQuantity, ArrayList<String> effects) {
+        super(name, description, price, stockAmount, magicProperties);
+        this.mlQuantity = mlQuantity;
+        this.effects = effects;
+    }
+
+    public Potion(String name, String description, Cash price, int stockAmount, Boolean isMagicProduct, int mlQuantity, ArrayList<String> effects) {
+        super(name, description, price, stockAmount, isMagicProduct);
+        this.mlQuantity = mlQuantity;
+        this.effects = effects;
+    }
+
     public int getMlQuantity() {
         return mlQuantity;
     }

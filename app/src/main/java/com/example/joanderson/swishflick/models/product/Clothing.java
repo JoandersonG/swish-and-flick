@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.example.joanderson.swishflick.models.Cash;
 
+import java.util.ArrayList;
 
 
 public class Clothing extends Product {
@@ -14,6 +15,18 @@ public class Clothing extends Product {
     public Clothing(String name, String description, Cash price, int stockAmount,
                     String size, String color) {
         super(name, description, price, stockAmount);
+        this.size = size;
+        this.color = color;
+    }
+
+    public Clothing(String name, String description, Cash price, int stockAmount, ArrayList<String> magicProperties, String size, String color) {
+        super(name, description, price, stockAmount, magicProperties);
+        this.size = size;
+        this.color = color;
+    }
+
+    public Clothing(String name, String description, Cash price, int stockAmount, Boolean isMagicProduct, String size, String color) {
+        super(name, description, price, stockAmount, isMagicProduct);
         this.size = size;
         this.color = color;
     }
