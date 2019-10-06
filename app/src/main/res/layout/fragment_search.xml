@@ -7,13 +7,15 @@
     tools:context=".fragments.SearchFragment"
     tools:layout_editor_absoluteY="25dp">
 
+
+
     <TextView
         android:id="@+id/tvSearchFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:text="@string/search_previous"
@@ -25,22 +27,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etSearch" />
 
-    <TextView
-        android:id="@+id/tvSearchFilter2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Buscar"
-        android:textColor="@android:color/black"
-        android:textSize="22sp"
-        app:fontFamily="@font/actor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvSearchPrevious"
@@ -48,7 +34,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
@@ -66,18 +52,23 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/profile_photo_background"
-        android:elevation="2dp"
+        android:background="@drawable/search_bar_background"
         android:ems="10"
         android:hint="@string/search_bar"
+        android:fontFamily="@font/actor"
         android:inputType="text"
-        android:paddingLeft="5dp"
         android:shadowRadius="10"
+        android:selectAllOnFocus="true"
         android:textColor="@android:color/black"
         app:layout_constraintCircleRadius="10sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvSearchFilter2" />
+        app:layout_constraintEnd_toEndOf="parent">
+        <requestFocus/>
+
+    </EditText>
+
+
+
 
 </android.support.constraint.ConstraintLayout>

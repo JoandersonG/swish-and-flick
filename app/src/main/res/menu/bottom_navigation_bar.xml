@@ -11,10 +11,6 @@
         android:icon="@drawable/ic_categories_black_24dp"
         android:title="@string/bottom_bar_categories" />
 
-    <item
-        android:id="@+id/nav_search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="@string/bottom_bar_search" />
 
     <item
         android:id="@+id/nav_profile"

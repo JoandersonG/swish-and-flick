@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
         getSupportFragmentManager().beginTransaction().replace(R.id.frame_principal,
                 new HomeFragment()).commit();
         //buttonActivate(ibHome);
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 
     }
 
@@ -92,9 +93,6 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
 
                         case R.id.nav_categories:
                             selectedFragment = new CategoriesFragment();
-                            break;
-                        case R.id.nav_search:
-                            selectedFragment = new SearchFragment();
                             break;
                         case R.id.nav_profile:
                             selectedFragment = new ProfileFragment();
@@ -184,12 +182,18 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
             case "fAddProductFragment":
                 ProfileFragment profileFragment = new ProfileFragment();
                 fragmentTransaction.replace(R.id.frame_principal,profileFragment);
+            case "iSearchFragment":
+                SearchFragment searchFragment = new SearchFragment();
+                fragmentTransaction.replace(R.id.frame_principal,searchFragment);
             default:
                 //todo: {erro: fragment não encontrada}
         }
         fragmentTransaction.commit();
     }
 
+    public void StartSearchFragment(View v) {
+        fragmentChange("iSearchFragment",null);
+    }
 
     public void activityChange(String operation) {
 
