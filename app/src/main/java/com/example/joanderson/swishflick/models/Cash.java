@@ -1,19 +1,30 @@
 package com.example.joanderson.swishflick.models;
 
+import android.support.annotation.NonNull;
+
 public class Cash {
 
     private int galleon;
     private int sickle;
     private int knut;
 
-    public Cash(int galleon, int sickle, int knut) {
+    public Cash(@NonNull int galleon,@NonNull  int sickle,@NonNull  int knut) {
 
         this.galleon = galleon;
         this.sickle = sickle;
         this.knut = knut;
+        if (!validations()) {
+            throw new IllegalArgumentException();
+        }
         updateValues();
     }
 
+    private boolean validations() {
+        if (galleon < 0 || sickle < 0 || knut < 0) {
+            return false;
+        }
+        return true;
+    }
     public int getGalleon() {
         return galleon;
     }

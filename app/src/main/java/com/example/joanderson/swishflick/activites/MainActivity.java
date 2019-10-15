@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -46,7 +48,7 @@ import java.util.UUID;
 public class MainActivity extends AppCompatActivity implements FragmentComunicator {
 
 
-
+    TextInputEditText galleons;
     ImageButton ibHome, ibCategories, ibProfile, ibSearch, ibCart;
     private BottomNavigationView bottom_navigation;
     private DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
@@ -65,7 +67,15 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
 */
         bottom_navigation = findViewById(R.id.bottom_navigation);
         bottom_navigation.setOnNavigationItemSelectedListener(navListener);
-
+//        galleons = findViewById(R.id.etFragAddPriceGalleon);
+//        galleons.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if ( ((TextInputEditText)view).getText().toString().equals("0")) {
+//                    ((TextInputEditText)view).setText("");
+//                }
+//            }
+//        });
 //        writeNewUser("user1","Joanderson", "joanderson@ufba.br");
        //addProductsToDatabase();
         //addMainSetProducts();
@@ -85,24 +95,28 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     Fragment selectedFragment = null;
-
+                    String tagFragment = "";
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
                             selectedFragment = new HomeFragment();
+                            tagFragment = "HOME_FRAGMENT";
                             break;
 
                         case R.id.nav_categories:
                             selectedFragment = new CategoriesFragment();
+                            tagFragment = "CATEGORIES_FRAGMENT";
                             break;
                         case R.id.nav_profile:
                             selectedFragment = new ProfileFragment();
+                            tagFragment = "PROFILE_FRAGMENT";
                             break;
                         case R.id.nav_cart:
                             selectedFragment = new CartFragment();
+                            tagFragment = "CART_FRAGMENT";
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame_principal,
-                            selectedFragment).commit();
+                            selectedFragment, tagFragment).commit();
                     return true;
                 };
             };
@@ -169,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
             case "iProductFragment":
                 ProductFragment productFragment = new ProductFragment();
                 productFragment.setProduct("this is a product");
-                fragmentTransaction.replace(R.id.frame_principal,productFragment);
+                fragmentTransaction.replace(R.id.frame_principal,productFragment, "PRODUCT_FRAGMENT");
                 break;
             case "iSeeMoreFragment":
                 HomeSeeMoreFragment seeMoreFragment = new HomeSeeMoreFragment();
@@ -177,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
                 break;
             case "iAddProductFragment":
                 AddProductFragment addProductFragment = new AddProductFragment();
-                fragmentTransaction.replace(R.id.frame_principal,addProductFragment);
+                fragmentTransaction.replace(R.id.frame_principal,addProductFragment,"ADD_PRODUCT_FRAGMENT");
                 break;
             case "fAddProductFragment":
                 ProfileFragment profileFragment = new ProfileFragment();
@@ -189,6 +203,14 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
                 //todo: {erro: fragment não encontrada}
         }
         fragmentTransaction.commit();
+    }
+
+    public void testValidation(View view) {
+        AddProductFragment addProductFragment = (AddProductFragment) getSupportFragmentManager().findFragmentByTag("ADD_PRODUCT_FRAGMENT");
+        if (addProductFragment != null) addProductFragment.testValidation(view);
+        else {
+            System.out.println("fragment não encontrado");
+        }
     }
 
     public void StartSearchFragment(View v) {

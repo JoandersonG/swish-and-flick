@@ -11,9 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,10 +26,17 @@ import android.widget.Toast;
 
 import com.example.joanderson.swishflick.R;
 import com.example.joanderson.swishflick.helpers.Permissions;
-import com.example.joanderson.swishflick.helpers.Validations;
+import com.example.joanderson.swishflick.helpers.ProductValidation;
 import com.example.joanderson.swishflick.interfaces.FragmentComunicator;
 import com.example.joanderson.swishflick.models.Cash;
 import com.example.joanderson.swishflick.models.product.Book;
+import com.example.joanderson.swishflick.models.product.Broomstick;
+import com.example.joanderson.swishflick.models.product.Clothing;
+import com.example.joanderson.swishflick.models.product.Potion;
+import com.example.joanderson.swishflick.models.product.Product;
+
+import java.io.InvalidClassException;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,7 +82,7 @@ public class AddProductFragment extends Fragment {
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String current = getResources().getStringArray(R.array.categoriesEN)[position];
+                String current = getResources().getStringArray(R.array.categories)[position];
                 loadLayoutSpinnerBased(current);
             }
 
@@ -94,124 +99,167 @@ public class AddProductFragment extends Fragment {
         return view;
     }
 
-    public void validateData (View view) {
+
+    public void testValidation (View view) {
         //todo: implementar stock amount
         String category = spinnerCategory.getSelectedItem().toString();
-        switch (category) {
-            case "Book":
-                //String name, String description, Cash price, int stockAmount,
-                //                int pagesAmount, String author, String publisher
-                Book book = new Book(
-                        title.getText().toString(),
-                        description.getText().toString(),
-                        new Cash(Integer.getInteger(galleon.getText().toString()),
-                                Integer.getInteger(sickle.getText().toString()),
-                                        Integer.getInteger(knut.getText().toString())),
-                        10,
-                        Integer.getInteger(pages.getText().toString()),
-                        author.getText().toString(),
-                        publisher.getText().toString()
+        Product product = null;
+        int validation = 0;
 
-                );
-                int resultMessage = Validations.validateBook(book);
-                if (resultMessage != 0) {
-                    printErrorMessage(getString(resultMessage));
-                }
-                else {
-                    //tudo certo, posso enviar para o banco
-                }
-        }
-        /////////////////////////////////////////////////////
-        if ( !(boolean) imageProduct.getTag() ) {
-            printErrorMessage(getString(R.string.validation_error_empty_image));
-        }
-        if (title.getText().toString().isEmpty()) {
-            printErrorMessage(getString(R.string.validation_error_empty_title));
-        }
-        if (description.getText().toString().isEmpty()) {
-            printErrorMessage(getString(R.string.validation_error_empty_description));
-        }
-        if (galleon.getText().toString().isEmpty()
-                && sickle.getText().toString().isEmpty()
-                && knut.getText().toString().isEmpty()) {
-            printErrorMessage(getString(R.string.validation_error_empty_price));
-        }
-        //todo: try and catch for this(?):
-        if (Integer.getInteger(galleon.getText().toString()) < 0
-                || Integer.getInteger(sickle.getText().toString()) < 0
-                || Integer.getInteger(knut.getText().toString()) < 0) {
-            printErrorMessage(getString(R.string.validation_error_invalid_price));
-        }
+        if (galleon.getText().toString().isEmpty()) galleon.setText("0");
+        if (sickle.getText().toString().isEmpty()) sickle.setText("0");
+        if (knut.getText().toString().isEmpty()) knut.setText("0");
 
-        //agora vêm as especificidades
+        try {
+            switch (category) {
+                case "Book":
+                    //String name, String description, Cash price, int stockAmount,
+                    //                int pagesAmount, String author, String publisher
 
-        switch (category) {
-            // Integer.getInteger(pages.getText().toString()),
-            //                        author.getText().toString(),
-            //                        publisher.getText().toString()
-            case "Book":
-                if (pages.getText().toString().isEmpty() || Integer.getInteger(pages.getText().toString())  <= 0) {
-                    printErrorMessage(getString(R.string.validation_error_empty_pages));
-                }
-                break;
+                    validation = ProductValidation.validateBookFields(
+                            title.getText().toString(),
+                            description.getText().toString(),
+                            pages.getText().toString(),
+                            author.getText().toString(),
+                            publisher.getText().toString(),
+                            galleon.getText().toString(),
+                            sickle.getText().toString(),
+                            knut.getText().toString()
+                    );
+                    if (validation == 0) {//all fields are correct
+                        //coloco no banco
+                        product = new Book(
+                                title.getText().toString(),
+                                description.getText().toString(),
+                                new Cash(Integer.parseInt(galleon.getText().toString()),
+                                        Integer.parseInt(sickle.getText().toString()),
+                                        Integer.parseInt(knut.getText().toString())),
+                                10,
+                                Integer.parseInt(pages.getText().toString()),
+                                author.getText().toString(),
+                                publisher.getText().toString()
 
-            case "Broomstick":
-                //todo: continuar daqui
-        }
-
-
-        String title = this.title.getText().toString();
-        String description = this.description.toString();
-        int galleon = Integer.valueOf(this.galleon.toString());
-        int sickle = Integer.valueOf(this.sickle.toString());
-        int knut = Integer.valueOf(this.knut.toString());
-
-        if ( (boolean) imageProduct.getTag() ) {
-            if( !title.isEmpty()) {
-                if( !description.isEmpty()) {
-                    if(galleon != 0 || sickle != 0 || knut != 0) {
-                        //agora vem as validações específicas
-                        if (category.equals("Book")) {
-                            String pages = this.pages.toString();
-                            String publisher = this.publisher.toString();
-                            String author = this.author.toString();
-
-                            if (!pages.isEmpty()) {
-                                if (!publisher.isEmpty()) {
-                                    if (!author.isEmpty()) {
-                                        //tudo certo, envia para a nuvem
-                                    }
-                                    else {
-                                        printErrorMessage("Por favor, insira o autor");
-                                    }
-                                }
-                                else {
-                                    printErrorMessage("Por favor, insira a editora");
-                                }
-                            }
-                            else {
-                                printErrorMessage("Por favor, insira o número de páginas");
-                            }
-                        }
-                        //TODO: continuar as validações aqui
+                        );
+                        System.out.println("tudo certo com livro" + title.getText().toString());
                     }
                     else {
-                        printErrorMessage("Por favor, insira o preço");
+                        Toast toast = Toast.makeText(getContext(), getString(validation), Toast.LENGTH_LONG);
+                        toast.show();
                     }
-                }
-                else {
-                    printErrorMessage("Por favor, insira a descrição");
-                }
-            }
-            else {
-                printErrorMessage("Por favor, insira o título");
-            }
-        }
-        else {
-            printErrorMessage("Por Favor, insira a imagem");
-        }
 
 
+                    break;
+                case "Broomstick":
+                    validation = ProductValidation.validateBroomstickFields(
+                            title.getText().toString(),
+                            description.getText().toString(),
+                            maxSpeed.getText().toString(),
+                            size.getText().toString(),
+                            galleon.getText().toString(),
+                            sickle.getText().toString(),
+                            knut.getText().toString()
+                    );
+
+                    if (validation == 0) {
+                        product = new Broomstick(
+                                title.getText().toString(),
+                                description.getText().toString(),
+                                new Cash(Integer.parseInt(galleon.getText().toString()),
+                                        Integer.parseInt(sickle.getText().toString()),
+                                        Integer.parseInt(knut.getText().toString())),
+                                10,
+                                true,
+                                Integer.parseInt(maxSpeed.getText().toString())
+                        );
+                        //envia pro banco
+                    }
+                    else {
+                        Toast toast = Toast.makeText(getContext(), getString(validation), Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+
+                    break;
+                case "Clothing":
+                    validation = ProductValidation.validateClothingFields(
+                            title.getText().toString(),
+                            description.getText().toString(),
+                            size.getText().toString(),
+                            galleon.getText().toString(),
+                            sickle.getText().toString(),
+                            knut.getText().toString()
+                    );
+
+                    if (validation == 0) {
+
+                        product = new Clothing(
+                                title.getText().toString(),
+                                description.getText().toString(),
+                                new Cash(Integer.parseInt(galleon.getText().toString()),
+                                        Integer.parseInt(sickle.getText().toString()),
+                                        Integer.parseInt(knut.getText().toString())),
+                                10,
+                                false,
+                                "P",
+                                "Blue"
+                        );
+
+                    }
+
+                    break;
+                case "Potion":
+                    ArrayList<String> effectList = new ArrayList<>();
+                    effectList.add(effects.getText().toString());
+                    validation = ProductValidation.validatePotionFields(
+                            title.getText().toString(),
+                            description.getText().toString(),
+                            mlQuantity.getText().toString(),
+                            effectList,
+                            galleon.getText().toString(),
+                            sickle.getText().toString(),
+                            knut.getText().toString()
+                    );
+
+                    if (validation == 0) {
+
+                        product = new Potion(
+                                title.getText().toString(),
+                                description.getText().toString(),
+                                new Cash(Integer.parseInt(galleon.getText().toString()),
+                                        Integer.parseInt(sickle.getText().toString()),
+                                        Integer.parseInt(knut.getText().toString())),
+                                10,
+                                Integer.parseInt(mlQuantity.getText().toString()),
+                                effectList
+
+                        );
+
+                    }
+
+                    //todo: efeitos corretamente
+
+                    break;
+                default:
+                    System.out.println("categoria inexistente: " + category);
+                    throw new InvalidClassException(category);
+            }
+            //validation = ProductValidation.validateProduct(product);
+            if (validation == 0) {
+                //tudo certo
+            } else {
+                Toast toast = Toast.makeText(getContext(), getString(validation), Toast.LENGTH_LONG);
+                toast.show();
+            }
+        }
+        catch (NullPointerException e) {
+
+            e.printStackTrace();
+        }
+        catch (Exception e) {
+            //todo: especificar mais os exceptions possíveis;
+            Toast toast = Toast.makeText(getContext(), getText(R.string.error_unknown), Toast.LENGTH_LONG);
+            toast.show();
+            e.printStackTrace();
+        }
     }
 
     private void printErrorMessage(String mensagem) {

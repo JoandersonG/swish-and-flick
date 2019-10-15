@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Swish &amp; Flick</string>
     <string name="search_intro">Encontre os mais diversos e incríveis produtos que a Swish &amp; Flick tem para você</string>
     <string name="search_bar">  Buscar</string>
@@ -13,31 +13,35 @@
     <string name="bottom_bar_cart">Carrinho</string>
 
 
-    <!-- Errors in Validations -->
-    <string name="validation_error_empty_title">Insira um título</string>
-    <string name="validation_error_empty_description">Insira uma descrição</string>
-    <string name="validation_error_empty_pages">Número de páginas inválido</string>
-    <string name="validation_error_empty_publisher">Insira a editora</string>
-    <string name="validation_error_empty_author">Insira o nome do autor</string>
-    <string name="validation_error_empty_price">Insira um preço válido</string>
-    <string name="validation_error_empty_image">Insira uma imagem</string>
-    <string name="validation_error_invalid_price">Insira um preço válido</string>
-
+    <!-- Errors in ProductValidation -->
+    <string name="validation_error_title">Insira um título válido</string>
+    <string name="validation_error_description">Insira uma descrição válida</string>
+    <string name="validation_error_pages">Insira um número de páginas válido</string>
+    <string name="validation_error_publisher">Insira uma editora válida</string>
+    <string name="validation_error_author">Insira um nome do autor válido</string>
+    <string name="validation_error_price" tools:ignore="ExtraTranslation">Insira um preço válido</string>
+    <string name="validation_error_image">Insira uma imagem</string>
+    <string name="validation_error_max_speed">Insira uma velocidade válida</string>
+    <string name="validation_error_size">Insira um tamanho válido</string>
+    <string name="validation_error_amount">Insira uma quantidade válida</string>
+    <string name="validation_error_effects">Insira efeitos válidos</string>
+    <string name="error_unknown">Erro desconhecido</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="categories">
+        <item>Book</item>
+        <item>Broomstick</item>
+        <item>Clothing</item>
+        <item>Potion</item>
+    </string-array>
+
+    <string-array name="categoriesPT">
         <item>Livro</item>
         <item>Vassoura</item>
         <item>Vestimenta</item>
         <item>Poção</item>
     </string-array>
 
-    <string-array name="categoriesEN">
-        <item>Book</item>
-        <item>Broomstick</item>
-        <item>Clothing</item>
-        <item>Potion</item>
-    </string-array>
 </resources>
