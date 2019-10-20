@@ -42,6 +42,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InvalidClassException;
 import java.util.ArrayList;
@@ -62,6 +63,7 @@ public class AddProductFragment extends Fragment {
             mlQuantity, effects, galleon, sickle, knut;
     private static ImageView imageProduct1, imageProduct2, imageProduct3;
     private FragmentComunicator fragmentComunicator;
+    private static String[] imagesUri;
     private String[] spinnerCategories;
     private String[] permissions = new String[] {
             Manifest.permission.READ_EXTERNAL_STORAGE
@@ -79,6 +81,7 @@ public class AddProductFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_add_product, container, false);
 
         loadViewIds(view);
+        imagesUri = new String[3];
         loadSpinnerValues();
         loadLayoutSpinnerBased("Book");
         imageProduct1.setOnClickListener(new View.OnClickListener() {
@@ -376,11 +379,11 @@ public class AddProductFragment extends Fragment {
         linearLayoutOfPagesAndPublisher = view.findViewById(R.id.linearLayoutOfPagesAndPublisher);
         spinnerCategories = getResources().getStringArray(R.array.categories);
         imageProduct1.setTag(false);
-        //imageProduct1.setEnabled(false);
+        imageProduct1.setSelected(false);
         imageProduct2.setTag(false);
-        //imageProduct2.setEnabled(false);
+        imageProduct2.setSelected(false);
         imageProduct3.setTag(false);
-        //imageProduct3.setEnabled(false);
+        imageProduct3.setSelected(false);
     }
 
     private void loadSpinnerValues() {
@@ -426,21 +429,27 @@ public class AddProductFragment extends Fragment {
 
         ArrayList<byte[]> images = new ArrayList<>();
 
-        Bitmap bitmap = ((BitmapDrawable) imageProduct1.getDrawable()).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        images.add(baos.toByteArray());
-
-        bitmap = ((BitmapDrawable) imageProduct2.getDrawable()).getBitmap();
-        baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        images.add(baos.toByteArray());
-
-        bitmap = ((BitmapDrawable) imageProduct3.getDrawable()).getBitmap();
-         baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        images.add(baos.toByteArray());
-
+        //testar se imagem é "vazia"
+        Bitmap bitmap;
+        ByteArrayOutputStream baos;
+        if (imageProduct1.isSelected()) {
+            bitmap = ((BitmapDrawable) imageProduct1.getDrawable()).getBitmap();
+            baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            images.add(baos.toByteArray());
+        }
+        if (imageProduct2.isSelected()) {
+            bitmap = ((BitmapDrawable) imageProduct2.getDrawable()).getBitmap();
+            baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            images.add(baos.toByteArray());
+        }
+        if (imageProduct3.isSelected()) {
+            bitmap = ((BitmapDrawable) imageProduct3.getDrawable()).getBitmap();
+            baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            images.add(baos.toByteArray());
+        }
 
         return images;
     }
@@ -450,23 +459,32 @@ public class AddProductFragment extends Fragment {
             //recover image
             Uri imagePicked = data.getData();
             String imagePath = imagePicked.toString();//todo: salvar URI para melhorar desempenho?
+
             System.out.println("RequestCode: " + requestCode);
             System.out.println("ResultCode: " + resultCode);
             if (imageProduct1.getTag().equals(true)) {
+                //imagesUri[0] = imagePath;
                 imageProduct1.setImageURI(imagePicked);
                 imageProduct1.setTag(false);
+                imageProduct1.setSelected(true);
                 //imageProduct1.setEnabled(true);
             }
             else if (imageProduct2.getTag().equals(true)) {
+                //imagesUri[1] = imagePath;
                 imageProduct2.setImageURI(imagePicked);
                 imageProduct2.setTag(false);
+                imageProduct1.setSelected(true);
             }
             else {
+                //imagesUri[2] = imagePath;
                 imageProduct3.setImageURI(imagePicked);
                 imageProduct3.setTag(false);
+                imageProduct1.setSelected(true);
             }
         }
     }
 
-
+//    public static String[] getImagesUri() {
+//        return imagesUri;
+//    }
 }

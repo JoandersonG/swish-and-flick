@@ -120,6 +120,8 @@ public abstract class ProductValidation {
         return true;
     }
 
+    //todo agora: public static boolean validateImages()
+
     public static int validateProduct(Product product) throws InvalidClassException {
         if (!validateTitle(product.getName())) {
             //erro no título
