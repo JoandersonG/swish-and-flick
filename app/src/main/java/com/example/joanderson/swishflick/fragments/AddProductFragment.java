@@ -7,6 +7,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -34,7 +37,12 @@ import com.example.joanderson.swishflick.models.product.Broomstick;
 import com.example.joanderson.swishflick.models.product.Clothing;
 import com.example.joanderson.swishflick.models.product.Potion;
 import com.example.joanderson.swishflick.models.product.Product;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
 import java.io.InvalidClassException;
 import java.util.ArrayList;
 
@@ -43,6 +51,7 @@ import java.util.ArrayList;
  */
 public class AddProductFragment extends Fragment {
 
+    private StorageReference storageReference;
     private LinearLayout  linearLayoutOfPagesAndPublisher;
     private TextInputLayout textInputLayoutOfAuthor, textInputLayoutOfMaxSpeed,
             textInputLayoutOfSize, textInputLayoutOfColor, textInputLayoutOfMlQuantity,
@@ -51,7 +60,7 @@ public class AddProductFragment extends Fragment {
     private Spinner spinnerCategory;
     private EditText title, description, pages, publisher, author, maxSpeed, size, color,
             mlQuantity, effects, galleon, sickle, knut;
-    private static ImageView imageProduct;
+    private static ImageView imageProduct1, imageProduct2, imageProduct3;
     private FragmentComunicator fragmentComunicator;
     private String[] spinnerCategories;
     private String[] permissions = new String[] {
@@ -72,10 +81,26 @@ public class AddProductFragment extends Fragment {
         loadViewIds(view);
         loadSpinnerValues();
         loadLayoutSpinnerBased("Book");
-        imageProduct.setOnClickListener(new View.OnClickListener() {
+        imageProduct1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageProduct1.setTag(true);
                 pickImage(1);
+            }
+        });
+        imageProduct2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageProduct2.setTag(true);
+                pickImage(2);
+
+            }
+        });
+        imageProduct3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imageProduct3.setTag(true);
+                pickImage(3);
             }
         });
 
@@ -91,6 +116,7 @@ public class AddProductFragment extends Fragment {
                 spinnerCategory.setSelection(0);
             }
         });
+
         spinnerCategory.setSelection(0);
 
         //validate permissions:
@@ -98,9 +124,83 @@ public class AddProductFragment extends Fragment {
 
         return view;
     }
+    public Product getProduct () {
+        String category = spinnerCategory.getSelectedItem().toString();
+        Product product = null;
+        int validation = 0;
+        try {
+            switch (category) {
+                case "Book":
+                    return new Book(
+                            title.getText().toString(),
+                            description.getText().toString(),
+                            new Cash(Integer.parseInt(galleon.getText().toString()),
+                                    Integer.parseInt(sickle.getText().toString()),
+                                    Integer.parseInt(knut.getText().toString())),
+                            10,
+                            Integer.parseInt(pages.getText().toString()),
+                            author.getText().toString(),
+                            publisher.getText().toString()
 
+                    );
 
-    public void testValidation (View view) {
+                case "Broomstick":
+                    return new Broomstick(
+                            title.getText().toString(),
+                            description.getText().toString(),
+                            new Cash(Integer.parseInt(galleon.getText().toString()),
+                                    Integer.parseInt(sickle.getText().toString()),
+                                    Integer.parseInt(knut.getText().toString())),
+                            10,
+                            true,
+                            Integer.parseInt(maxSpeed.getText().toString())
+                    );
+                    //envia pro banco
+
+                case "Clothing":
+
+                    return new Clothing(
+                            title.getText().toString(),
+                            description.getText().toString(),
+                            new Cash(Integer.parseInt(galleon.getText().toString()),
+                                    Integer.parseInt(sickle.getText().toString()),
+                                    Integer.parseInt(knut.getText().toString())),
+                            10,
+                            false,
+                            "P",
+                            "Blue"
+                    );
+
+                case "Potion":
+                    ArrayList<String> effectList = new ArrayList<>();
+                    effectList.add(effects.getText().toString());
+
+                    return new Potion(
+                            title.getText().toString(),
+                            description.getText().toString(),
+                            new Cash(Integer.parseInt(galleon.getText().toString()),
+                                    Integer.parseInt(sickle.getText().toString()),
+                                    Integer.parseInt(knut.getText().toString())),
+                            10,
+                            Integer.parseInt(mlQuantity.getText().toString()),
+                            effectList
+
+                    );
+
+                    //todo: efeitos corretamente
+
+                default:
+                    System.out.println("categoria inexistente: " + category);
+                    throw new InvalidClassException(category);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean testValidation (View view) {
         //todo: implementar stock amount
         String category = spinnerCategory.getSelectedItem().toString();
         Product product = null;
@@ -126,28 +226,6 @@ public class AddProductFragment extends Fragment {
                             sickle.getText().toString(),
                             knut.getText().toString()
                     );
-                    if (validation == 0) {//all fields are correct
-                        //coloco no banco
-                        product = new Book(
-                                title.getText().toString(),
-                                description.getText().toString(),
-                                new Cash(Integer.parseInt(galleon.getText().toString()),
-                                        Integer.parseInt(sickle.getText().toString()),
-                                        Integer.parseInt(knut.getText().toString())),
-                                10,
-                                Integer.parseInt(pages.getText().toString()),
-                                author.getText().toString(),
-                                publisher.getText().toString()
-
-                        );
-                        System.out.println("tudo certo com livro" + title.getText().toString());
-                    }
-                    else {
-                        Toast toast = Toast.makeText(getContext(), getString(validation), Toast.LENGTH_LONG);
-                        toast.show();
-                    }
-
-
                     break;
                 case "Broomstick":
                     validation = ProductValidation.validateBroomstickFields(
@@ -159,25 +237,6 @@ public class AddProductFragment extends Fragment {
                             sickle.getText().toString(),
                             knut.getText().toString()
                     );
-
-                    if (validation == 0) {
-                        product = new Broomstick(
-                                title.getText().toString(),
-                                description.getText().toString(),
-                                new Cash(Integer.parseInt(galleon.getText().toString()),
-                                        Integer.parseInt(sickle.getText().toString()),
-                                        Integer.parseInt(knut.getText().toString())),
-                                10,
-                                true,
-                                Integer.parseInt(maxSpeed.getText().toString())
-                        );
-                        //envia pro banco
-                    }
-                    else {
-                        Toast toast = Toast.makeText(getContext(), getString(validation), Toast.LENGTH_LONG);
-                        toast.show();
-                    }
-
                     break;
                 case "Clothing":
                     validation = ProductValidation.validateClothingFields(
@@ -188,23 +247,6 @@ public class AddProductFragment extends Fragment {
                             sickle.getText().toString(),
                             knut.getText().toString()
                     );
-
-                    if (validation == 0) {
-
-                        product = new Clothing(
-                                title.getText().toString(),
-                                description.getText().toString(),
-                                new Cash(Integer.parseInt(galleon.getText().toString()),
-                                        Integer.parseInt(sickle.getText().toString()),
-                                        Integer.parseInt(knut.getText().toString())),
-                                10,
-                                false,
-                                "P",
-                                "Blue"
-                        );
-
-                    }
-
                     break;
                 case "Potion":
                     ArrayList<String> effectList = new ArrayList<>();
@@ -218,25 +260,7 @@ public class AddProductFragment extends Fragment {
                             sickle.getText().toString(),
                             knut.getText().toString()
                     );
-
-                    if (validation == 0) {
-
-                        product = new Potion(
-                                title.getText().toString(),
-                                description.getText().toString(),
-                                new Cash(Integer.parseInt(galleon.getText().toString()),
-                                        Integer.parseInt(sickle.getText().toString()),
-                                        Integer.parseInt(knut.getText().toString())),
-                                10,
-                                Integer.parseInt(mlQuantity.getText().toString()),
-                                effectList
-
-                        );
-
-                    }
-
                     //todo: efeitos corretamente
-
                     break;
                 default:
                     System.out.println("categoria inexistente: " + category);
@@ -245,9 +269,9 @@ public class AddProductFragment extends Fragment {
             //validation = ProductValidation.validateProduct(product);
             if (validation == 0) {
                 //tudo certo
+                return true;
             } else {
-                Toast toast = Toast.makeText(getContext(), getString(validation), Toast.LENGTH_LONG);
-                toast.show();
+                printErrorMessage(getString(validation));
             }
         }
         catch (NullPointerException e) {
@@ -256,10 +280,10 @@ public class AddProductFragment extends Fragment {
         }
         catch (Exception e) {
             //todo: especificar mais os exceptions possíveis;
-            Toast toast = Toast.makeText(getContext(), getText(R.string.error_unknown), Toast.LENGTH_LONG);
-            toast.show();
+            printErrorMessage("Erro desconhecido");
             e.printStackTrace();
         }
+        return false;
     }
 
     private void printErrorMessage(String mensagem) {
@@ -323,7 +347,9 @@ public class AddProductFragment extends Fragment {
 
     private void loadViewIds(View view) {
         fragmentComunicator = (FragmentComunicator) getActivity();
-        imageProduct = view.findViewById(R.id.ivAddProductFragment);
+        imageProduct1 = view.findViewById(R.id.ivAddProductFragment1);
+        imageProduct2 = view.findViewById(R.id.ivAddProductFragment2);
+        imageProduct3 = view.findViewById(R.id.ivAddProductFragment3);
         spinnerCategory = view.findViewById(R.id.spinnerFragAddProductCategory);
         title = view.findViewById(R.id.etFragAddProductTitle);
         description = view.findViewById(R.id.etFragAddProductDescription);
@@ -349,7 +375,12 @@ public class AddProductFragment extends Fragment {
         textInputLayoutOfSize = view.findViewById(R.id.textInputLayoutOfSize);
         linearLayoutOfPagesAndPublisher = view.findViewById(R.id.linearLayoutOfPagesAndPublisher);
         spinnerCategories = getResources().getStringArray(R.array.categories);
-        imageProduct.setTag(false);
+        imageProduct1.setTag(false);
+        //imageProduct1.setEnabled(false);
+        imageProduct2.setTag(false);
+        //imageProduct2.setEnabled(false);
+        imageProduct3.setTag(false);
+        //imageProduct3.setEnabled(false);
     }
 
     private void loadSpinnerValues() {
@@ -391,13 +422,49 @@ public class AddProductFragment extends Fragment {
         dialog.show();
     }
 
+    public ArrayList<byte[]> getImageByte() {
+
+        ArrayList<byte[]> images = new ArrayList<>();
+
+        Bitmap bitmap = ((BitmapDrawable) imageProduct1.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        images.add(baos.toByteArray());
+
+        bitmap = ((BitmapDrawable) imageProduct2.getDrawable()).getBitmap();
+        baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        images.add(baos.toByteArray());
+
+        bitmap = ((BitmapDrawable) imageProduct3.getDrawable()).getBitmap();
+         baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        images.add(baos.toByteArray());
+
+
+        return images;
+    }
+
     public static void activityResultImagePick(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {
             //recover image
             Uri imagePicked = data.getData();
-            String imagePath = imagePicked.toString();
-            imageProduct.setImageURI(imagePicked);
-            imageProduct.setTag(true);
+            String imagePath = imagePicked.toString();//todo: salvar URI para melhorar desempenho?
+            System.out.println("RequestCode: " + requestCode);
+            System.out.println("ResultCode: " + resultCode);
+            if (imageProduct1.getTag().equals(true)) {
+                imageProduct1.setImageURI(imagePicked);
+                imageProduct1.setTag(false);
+                //imageProduct1.setEnabled(true);
+            }
+            else if (imageProduct2.getTag().equals(true)) {
+                imageProduct2.setImageURI(imagePicked);
+                imageProduct2.setTag(false);
+            }
+            else {
+                imageProduct3.setImageURI(imagePicked);
+                imageProduct3.setTag(false);
+            }
         }
     }
 

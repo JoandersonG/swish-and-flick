@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.joanderson.swishflick.R;
 import com.example.joanderson.swishflick.fragments.AddProductFragment;
@@ -30,12 +31,16 @@ import com.example.joanderson.swishflick.interfaces.FragmentComunicator;
 import com.example.joanderson.swishflick.models.Cash;
 import com.example.joanderson.swishflick.models.HomeFragmentItem;
 import com.example.joanderson.swishflick.models.product.Book;
+import com.example.joanderson.swishflick.models.product.Broomstick;
+import com.example.joanderson.swishflick.models.product.Clothing;
+import com.example.joanderson.swishflick.models.product.Potion;
 import com.example.joanderson.swishflick.models.product.Product;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -43,7 +48,10 @@ import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.UUID;
+
+import static com.google.firebase.database.ServerValue.TIMESTAMP;
 
 public class MainActivity extends AppCompatActivity implements FragmentComunicator {
 
@@ -190,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
                 fragmentTransaction.replace(R.id.frame_principal,seeMoreFragment);
                 break;
             case "iAddProductFragment":
+
                 AddProductFragment addProductFragment = new AddProductFragment();
                 fragmentTransaction.replace(R.id.frame_principal,addProductFragment,"ADD_PRODUCT_FRAGMENT");
                 break;
@@ -211,6 +220,62 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
         else {
             System.out.println("fragment não encontrado");
         }
+        if (addProductFragment == null) {
+            Toast.makeText(this, "Erro interno: fragment não encontrada",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (addProductFragment.testValidation(view)) {
+            Product product = addProductFragment.getProduct();
+            saveProductOnDatabase(product, addProductFragment.getImageByte());
+        }
+
+    }
+
+    /*public void getImage(View view) {
+        AddProductFragment addProductFragment = (AddProductFragment) getSupportFragmentManager().findFragmentByTag("ADD_PRODUCT_FRAGMENT");
+        if (addProductFragment == null) {
+            Toast.makeText(this, "Erro interno: fragment não encontrada",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        addProductFragment.getImage(view);
+
+    }*/
+
+    public void saveProductOnDatabase(Product product, ArrayList<byte[]> images) {
+        String tipo;
+        String imageUrl;
+        String randomId = UUID.randomUUID().toString();
+        Map<String, String> timestamp = TIMESTAMP;
+
+        if (product.getClass() == Book.class) {
+            tipo = "books";
+        }
+        else if (product.getClass() == Broomstick.class) {
+            tipo = "broomsticks";
+        }
+        else if (product.getClass() == Clothing.class) {
+            tipo = "clothings";
+        }
+        else if (product.getClass() == Potion.class) {
+            tipo = "potions";
+        }
+        else {
+            Toast.makeText(this, "Erro: não foi possível salvar dados",Toast.LENGTH_LONG).show();
+            return;
+        }
+        DatabaseReference nodeToAdd = databaseReference.child("products").child(randomId);
+        StorageReference imageToAdd = storageReference.child("images").child(tipo).child(randomId);
+        nodeToAdd.setValue(product);
+        nodeToAdd.child("class").setValue(tipo);
+        nodeToAdd.child("timestamp").setValue(timestamp);
+
+        for (int i = 0; i < images.size(); i++) {
+            imageToAdd.child(""+i).putBytes(images.get(i));
+        }
+
+
+        Toast.makeText(this, "Salvando dados...",Toast.LENGTH_LONG).show();
+
     }
 
     public void StartSearchFragment(View v) {

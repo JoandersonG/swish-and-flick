@@ -64,7 +64,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
 */
 
-/*
+
         myViewHolder.cvProduct1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,8 +95,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                 comunicator.fragmentChange("iSeeMoreFragment",bundle);
             }
         });
-*/
-        System.out.println("onBindViewHolder: calld " + i + "times");
+
+//        System.out.println("onBindViewHolder: calld " + i + "times");
 
     }
 
