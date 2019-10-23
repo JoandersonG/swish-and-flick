@@ -60,7 +60,7 @@ public class AddProductFragment extends Fragment {
             textInputLayoutOfPriceGalleon;
     private Spinner spinnerCategory;
     private EditText title, description, pages, publisher, author, maxSpeed, size, color,
-            mlQuantity, effects, galleon, sickle, knut;
+            mlQuantity, effects, galleon, sickle, knut, stock;
     private static ImageView imageProduct1, imageProduct2, imageProduct3;
     private FragmentComunicator fragmentComunicator;
     private static String[] imagesUri;
@@ -211,9 +211,18 @@ public class AddProductFragment extends Fragment {
 
 
 
+
         if (galleon.getText().toString().isEmpty()) galleon.setText("0");
         if (sickle.getText().toString().isEmpty()) sickle.setText("0");
         if (knut.getText().toString().isEmpty()) knut.setText("0");
+        if (stock.getText().toString().isEmpty()) stock.setText("0");
+
+        //testar estoque:
+        if (Integer.parseInt(stock.getText().toString()) < 0) {
+            validation = R.string.validation_error_stock;
+            printErrorMessage(getString(validation));
+            return false;
+        }
 
         try {
             //testa imagens: precisa de ao menos uma
@@ -372,6 +381,7 @@ public class AddProductFragment extends Fragment {
         color = view.findViewById(R.id.etFragAddProductColor);
         mlQuantity = view.findViewById(R.id.etFragAddProductMlQuantity);
         effects = view.findViewById(R.id.etFragAddProductEffects);
+        stock = view.findViewById(R.id.etFragAddProductStock);
         galleon = view.findViewById(R.id.etFragAddPriceGalleon);
         sickle = view.findViewById(R.id.etFragAddPriceSickle);
         knut = view.findViewById(R.id.etFragAddPriceKnut);
