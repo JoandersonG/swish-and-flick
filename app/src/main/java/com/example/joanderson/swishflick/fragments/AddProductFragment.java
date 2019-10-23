@@ -209,65 +209,73 @@ public class AddProductFragment extends Fragment {
         Product product = null;
         int validation = 0;
 
+
+
         if (galleon.getText().toString().isEmpty()) galleon.setText("0");
         if (sickle.getText().toString().isEmpty()) sickle.setText("0");
         if (knut.getText().toString().isEmpty()) knut.setText("0");
 
         try {
-            switch (category) {
-                case "Book":
-                    //String name, String description, Cash price, int stockAmount,
-                    //                int pagesAmount, String author, String publisher
+            //testa imagens: precisa de ao menos uma
+            if (!imageProduct1.isSelected() && !imageProduct2.isSelected() && !imageProduct3.isSelected()) {
+                validation = R.string.validation_error_images;
+            }
+            else {
+                switch (category) {
+                    case "Book":
+                        //String name, String description, Cash price, int stockAmount,
+                        //                int pagesAmount, String author, String publisher
 
-                    validation = ProductValidation.validateBookFields(
-                            title.getText().toString(),
-                            description.getText().toString(),
-                            pages.getText().toString(),
-                            author.getText().toString(),
-                            publisher.getText().toString(),
-                            galleon.getText().toString(),
-                            sickle.getText().toString(),
-                            knut.getText().toString()
-                    );
-                    break;
-                case "Broomstick":
-                    validation = ProductValidation.validateBroomstickFields(
-                            title.getText().toString(),
-                            description.getText().toString(),
-                            maxSpeed.getText().toString(),
-                            size.getText().toString(),
-                            galleon.getText().toString(),
-                            sickle.getText().toString(),
-                            knut.getText().toString()
-                    );
-                    break;
-                case "Clothing":
-                    validation = ProductValidation.validateClothingFields(
-                            title.getText().toString(),
-                            description.getText().toString(),
-                            size.getText().toString(),
-                            galleon.getText().toString(),
-                            sickle.getText().toString(),
-                            knut.getText().toString()
-                    );
-                    break;
-                case "Potion":
-                    ArrayList<String> effectList = new ArrayList<>();
-                    effectList.add(effects.getText().toString());
-                    validation = ProductValidation.validatePotionFields(
-                            title.getText().toString(),
-                            description.getText().toString(),
-                            mlQuantity.getText().toString(),
-                            effectList,
-                            galleon.getText().toString(),
-                            sickle.getText().toString(),
-                            knut.getText().toString()
-                    );
-                    //todo: efeitos corretamente
-                    break;
-                default:
-                    System.out.println("categoria inexistente: " + category);
-                    throw new InvalidClassException(category);
+                        validation = ProductValidation.validateBookFields(
+                                title.getText().toString(),
+                                description.getText().toString(),
+                                pages.getText().toString(),
+                                author.getText().toString(),
+                                publisher.getText().toString(),
+                                galleon.getText().toString(),
+                                sickle.getText().toString(),
+                                knut.getText().toString()
+                        );
+                        break;
+                    case "Broomstick":
+                        validation = ProductValidation.validateBroomstickFields(
+                                title.getText().toString(),
+                                description.getText().toString(),
+                                maxSpeed.getText().toString(),
+                                size.getText().toString(),
+                                galleon.getText().toString(),
+                                sickle.getText().toString(),
+                                knut.getText().toString()
+                        );
+                        break;
+                    case "Clothing":
+                        validation = ProductValidation.validateClothingFields(
+                                title.getText().toString(),
+                                description.getText().toString(),
+                                size.getText().toString(),
+                                galleon.getText().toString(),
+                                sickle.getText().toString(),
+                                knut.getText().toString()
+                        );
+                        break;
+                    case "Potion":
+                        ArrayList<String> effectList = new ArrayList<>();
+                        effectList.add(effects.getText().toString());
+                        validation = ProductValidation.validatePotionFields(
+                                title.getText().toString(),
+                                description.getText().toString(),
+                                mlQuantity.getText().toString(),
+                                effectList,
+                                galleon.getText().toString(),
+                                sickle.getText().toString(),
+                                knut.getText().toString()
+                        );
+                        //todo: efeitos corretamente
+                        break;
+                    default:
+                        System.out.println("categoria inexistente: " + category);
+                        throw new InvalidClassException(category);
+                }
             }
             //validation = ProductValidation.validateProduct(product);
             if (validation == 0) {

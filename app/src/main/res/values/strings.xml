@@ -20,11 +20,11 @@
     <string name="validation_error_publisher">Insira uma editora válida</string>
     <string name="validation_error_author">Insira um nome do autor válido</string>
     <string name="validation_error_price" tools:ignore="ExtraTranslation">Insira um preço válido</string>
-    <string name="validation_error_image">Insira uma imagem</string>
     <string name="validation_error_max_speed">Insira uma velocidade válida</string>
     <string name="validation_error_size">Insira um tamanho válido</string>
     <string name="validation_error_amount">Insira uma quantidade válida</string>
     <string name="validation_error_effects">Insira efeitos válidos</string>
+    <string name="validation_error_images">Insira ao menos uma imagem</string>
     <string name="error_unknown">Erro desconhecido</string>
 
     <!-- TODO: Remove or change this placeholder text -->
