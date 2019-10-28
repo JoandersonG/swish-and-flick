@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -61,7 +62,9 @@ public class AddProductFragment extends Fragment {
     private Spinner spinnerCategory;
     private EditText title, description, pages, publisher, author, maxSpeed, size, color,
             mlQuantity, effects, galleon, sickle, knut, stock;
+    //todo: resolver isso (tirar static)
     private static ImageView imageProduct1, imageProduct2, imageProduct3;
+    private static ImageButton ibCloseImage1, ibCloseImage2, ibCloseImage3;
     private FragmentComunicator fragmentComunicator;
     private static String[] imagesUri;
     private String[] spinnerCategories;
@@ -84,11 +87,21 @@ public class AddProductFragment extends Fragment {
         imagesUri = new String[3];
         loadSpinnerValues();
         loadLayoutSpinnerBased("Book");
+
         imageProduct1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 imageProduct1.setTag(true);
                 pickImage(1);
+            }
+        });
+        ibCloseImage1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageProduct1.setSelected(false);
+                imageProduct1.setImageResource(R.drawable.produto_sem_imagem);
+                ibCloseImage1.setVisibility(ImageButton.GONE);
+
             }
         });
         imageProduct2.setOnClickListener(new View.OnClickListener() {
@@ -99,6 +112,14 @@ public class AddProductFragment extends Fragment {
 
             }
         });
+        ibCloseImage2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageProduct2.setSelected(false);
+                imageProduct2.setImageResource(R.drawable.produto_sem_imagem);
+                ibCloseImage2.setVisibility(ImageButton.GONE);
+            }
+        });
         imageProduct3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,7 +127,15 @@ public class AddProductFragment extends Fragment {
                 pickImage(3);
             }
         });
+        ibCloseImage3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageProduct3.setSelected(false);
+                imageProduct3.setImageResource(R.drawable.produto_sem_imagem);
+                ibCloseImage3.setVisibility(ImageButton.GONE);
 
+            }
+        });
         spinnerCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -210,7 +239,7 @@ public class AddProductFragment extends Fragment {
         int validation = 0;
 
 
-
+    //todo agora: colocar x nas imagens selecionadas para o produto
 
         if (galleon.getText().toString().isEmpty()) galleon.setText("0");
         if (sickle.getText().toString().isEmpty()) sickle.setText("0");
@@ -312,6 +341,10 @@ public class AddProductFragment extends Fragment {
 
     private void loadLayoutSpinnerBased(String spinner) {
 
+        ibCloseImage1.setVisibility(ImageButton.GONE);
+        ibCloseImage2.setVisibility(ImageButton.GONE);
+        ibCloseImage3.setVisibility(ImageButton.GONE);
+
         if (spinner.equals("Broomstick")) {
             maxSpeed.setVisibility(EditText.VISIBLE);
             textInputLayoutOfMaxSpeed.setVisibility(TextInputLayout.VISIBLE);
@@ -370,6 +403,9 @@ public class AddProductFragment extends Fragment {
         imageProduct1 = view.findViewById(R.id.ivAddProductFragment1);
         imageProduct2 = view.findViewById(R.id.ivAddProductFragment2);
         imageProduct3 = view.findViewById(R.id.ivAddProductFragment3);
+        ibCloseImage1 = view.findViewById(R.id.ibCloseImage1);
+        ibCloseImage2 = view.findViewById(R.id.ibCloseImage2);
+        ibCloseImage3 = view.findViewById(R.id.ibCloseImage3);
         spinnerCategory = view.findViewById(R.id.spinnerFragAddProductCategory);
         title = view.findViewById(R.id.etFragAddProductTitle);
         description = view.findViewById(R.id.etFragAddProductDescription);
@@ -477,7 +513,6 @@ public class AddProductFragment extends Fragment {
             //recover image
             Uri imagePicked = data.getData();
             String imagePath = imagePicked.toString();//todo: salvar URI para melhorar desempenho?
-
             System.out.println("RequestCode: " + requestCode);
             System.out.println("ResultCode: " + resultCode);
             if (imageProduct1.getTag().equals(true)) {
@@ -485,19 +520,23 @@ public class AddProductFragment extends Fragment {
                 imageProduct1.setImageURI(imagePicked);
                 imageProduct1.setTag(false);
                 imageProduct1.setSelected(true);
+                ibCloseImage1.setVisibility(ImageButton.VISIBLE);
                 //imageProduct1.setEnabled(true);
             }
+
             else if (imageProduct2.getTag().equals(true)) {
                 //imagesUri[1] = imagePath;
                 imageProduct2.setImageURI(imagePicked);
                 imageProduct2.setTag(false);
-                imageProduct1.setSelected(true);
+                imageProduct2.setSelected(true);
+                ibCloseImage2.setVisibility(ImageButton.VISIBLE);
             }
             else {
                 //imagesUri[2] = imagePath;
                 imageProduct3.setImageURI(imagePicked);
                 imageProduct3.setTag(false);
-                imageProduct1.setSelected(true);
+                imageProduct3.setSelected(true);
+                ibCloseImage3.setVisibility(ImageButton.VISIBLE);
             }
         }
     }
