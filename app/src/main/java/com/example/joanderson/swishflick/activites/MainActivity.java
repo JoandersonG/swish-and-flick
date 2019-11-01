@@ -1,5 +1,6 @@
 package com.example.joanderson.swishflick.activites;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -9,12 +10,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.joanderson.swishflick.R;
@@ -35,6 +38,7 @@ import com.example.joanderson.swishflick.models.product.Broomstick;
 import com.example.joanderson.swishflick.models.product.Clothing;
 import com.example.joanderson.swishflick.models.product.Potion;
 import com.example.joanderson.swishflick.models.product.Product;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +47,9 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.synnapps.carouselview.CarouselView;
 import com.synnapps.carouselview.ImageListener;
 
@@ -227,6 +233,9 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
         if (addProductFragment.testValidation(view)) {
             Product product = addProductFragment.getProduct();
             saveProductOnDatabase(product, addProductFragment.getImageByte());
+
+
+
         }
 
     }
@@ -269,12 +278,24 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
         nodeToAdd.child("class").setValue(tipo);
         nodeToAdd.child("timestamp").setValue(timestamp);
 
+        LayoutInflater li = getLayoutInflater();
+        View v = li.inflate(R.layout.alert_saving_database, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Salvando...");
+        builder.setView(v);
+        final AlertDialog alerta = builder.create();
+        alerta.show();
+
         for (int i = 0; i < images.size(); i++) {
-            imageToAdd.child(""+i).putBytes(images.get(i));
+            alerta.show();
+            imageToAdd.child(""+i).putBytes(images.get(i)).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    alerta.dismiss();
+                }
+            });
         }
-
-
-        Toast.makeText(this, "Salvando dados...",Toast.LENGTH_LONG).show();
+            
 
     }
 

@@ -127,6 +127,8 @@ public class AddProductFragment extends Fragment {
                 pickImage(3);
             }
         });
+        //todo agora: refactor categorias
+
         ibCloseImage3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
