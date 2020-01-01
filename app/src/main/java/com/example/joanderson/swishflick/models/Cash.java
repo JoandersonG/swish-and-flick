@@ -8,7 +8,11 @@ public class Cash {
     private int sickle;
     private int knut;
 
-    public Cash(@NonNull int galleon,@NonNull  int sickle,@NonNull  int knut) {
+    public Cash() {
+
+    }
+
+    public Cash(@NonNull int galleon, @NonNull  int sickle, @NonNull  int knut) {
 
         this.galleon = galleon;
         this.sickle = sickle;
@@ -83,7 +87,8 @@ public class Cash {
         updateValues();
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "" + galleon + " G, " + sickle + " S, " + knut + " K";
+    }
 }

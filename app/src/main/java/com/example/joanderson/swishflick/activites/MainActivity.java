@@ -26,12 +26,14 @@ import com.example.joanderson.swishflick.fragments.CartFragment;
 import com.example.joanderson.swishflick.fragments.CategoriesFragment;
 import com.example.joanderson.swishflick.fragments.HomeFragment;
 import com.example.joanderson.swishflick.fragments.HomeSeeMoreFragment;
+import com.example.joanderson.swishflick.fragments.PickedCategoryFragment;
 import com.example.joanderson.swishflick.fragments.ProductFragment;
 import com.example.joanderson.swishflick.fragments.ProfileFragment;
 import com.example.joanderson.swishflick.fragments.SearchFragment;
 import com.example.joanderson.swishflick.fragments.SearchResultsFragment;
 import com.example.joanderson.swishflick.interfaces.FragmentComunicator;
 import com.example.joanderson.swishflick.models.Cash;
+import com.example.joanderson.swishflick.models.Category;
 import com.example.joanderson.swishflick.models.HomeFragmentItem;
 import com.example.joanderson.swishflick.models.product.Book;
 import com.example.joanderson.swishflick.models.product.Broomstick;
@@ -196,7 +198,8 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
                 break;
             case "iProductFragment":
                 ProductFragment productFragment = new ProductFragment();
-                productFragment.setProduct("this is a product");
+                Product product = (Product) data.getSerializable("product");
+                productFragment.setProduct(product);
                 fragmentTransaction.replace(R.id.frame_principal,productFragment, "PRODUCT_FRAGMENT");
                 break;
             case "iSeeMoreFragment":
@@ -211,9 +214,17 @@ public class MainActivity extends AppCompatActivity implements FragmentComunicat
             case "fAddProductFragment":
                 ProfileFragment profileFragment = new ProfileFragment();
                 fragmentTransaction.replace(R.id.frame_principal,profileFragment);
+                break;
             case "iSearchFragment":
                 SearchFragment searchFragment = new SearchFragment();
                 fragmentTransaction.replace(R.id.frame_principal,searchFragment);
+                break;
+            case "iCategoryPicked":
+                PickedCategoryFragment pickedCategoryFragment = new PickedCategoryFragment();
+                Category category = (Category) data.get("category");
+                pickedCategoryFragment.setCategory(category);
+                fragmentTransaction.replace(R.id.frame_principal,pickedCategoryFragment);
+                break;
             default:
                 //todo: {erro: fragment não encontrada}
         }

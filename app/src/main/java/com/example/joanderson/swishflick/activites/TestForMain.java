@@ -57,7 +57,7 @@ public class TestForMain extends AppCompatActivity implements FragmentComunicato
                 break;
             case "iProductFragment":
                 ProductFragment productFragment = new ProductFragment();
-                productFragment.setProduct("this is a product");
+                //productFragment.setProduct("this is a product");
                 fragmentTransaction.replace(R.id.frame_principal,productFragment);
                 break;
             case "iSeeMoreFragment":

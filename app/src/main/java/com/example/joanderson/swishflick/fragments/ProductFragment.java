@@ -2,7 +2,6 @@ package com.example.joanderson.swishflick.fragments;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +17,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.joanderson.swishflick.R;
+import com.example.joanderson.swishflick.models.product.Artifact;
+import com.example.joanderson.swishflick.models.product.Book;
+import com.example.joanderson.swishflick.models.product.Clothing;
+import com.example.joanderson.swishflick.models.product.Jewelry;
+import com.example.joanderson.swishflick.models.product.Potion;
+import com.example.joanderson.swishflick.models.product.Product;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FirebaseStorage;
@@ -30,12 +35,17 @@ import com.synnapps.carouselview.ImageListener;
  */
 public class ProductFragment extends Fragment {
 
-    String product;
+    Product product = null;
+    String storageReferenceChild;
+    //String imagesPath =null;
     Context context;
+    TextView title, description;
     CarouselView carouselView;
     Button btSize;
     ImageView imageProduct;
-    private int[] sampleImages = {R.drawable.produto_sem_imagem, R.drawable.produto_sem_imagem, R.drawable.produto_sem_imagem};
+    StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+
+    private int[] productImages = {R.drawable.produto_sem_imagem, R.drawable.produto_sem_imagem, R.drawable.produto_sem_imagem};
 
     public ProductFragment() {
         // Required empty public constructor
@@ -49,7 +59,9 @@ public class ProductFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_product, container, false);
 
         btSize = view.findViewById(R.id.btFragmentProductSize);
-        carouselView = view.findViewById(R.id.carouselViewProductImages);
+        title = view.findViewById(R.id.tvTitleFragmentProduct);
+        description = view.findViewById(R.id.tvDescriptionProductFragment);
+        //carouselView = view.findViewById(R.id.cvProductImagesFragmentProduct);
         context = view.getContext();
         btSize.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,16 +89,91 @@ public class ProductFragment extends Fragment {
 
         int totalImages = 3;// =
 
-        carouselView = (CarouselView) view.findViewById(R.id.carouselViewProductImages);
+        carouselView = (CarouselView) view.findViewById(R.id.cvProductImagesFragmentProduct);
         carouselView.setPageCount(totalImages);
         carouselView.setImageListener(imageListener);
+
+
+        if (product != null) {
+
+            title.setText(product.getName());
+            description.setText(product.getDescription());
+
+
+            if (product.getClass() == Book.class) {
+            storageReferenceChild = "books";
+            }
+            //todo: Broomstick
+            else if (product.getClass() == Clothing.class) {
+                storageReferenceChild = "clothings";
+            }
+            else if (product.getClass() == Potion.class) {
+                storageReferenceChild = "potions";
+            }
+            else if (product.getClass() == Jewelry.class) {
+                storageReferenceChild = "jewelrys";
+            }
+            else if (product.getClass() == Artifact.class) {
+                storageReferenceChild = "artifacts";
+            }
+            else {
+                //não encontrado
+                storageReferenceChild = "";
+            }
+
+            //final long TEN_MEGABYTES = 1024 * 1024 * 10;
+//            storageReference.child("images").child(storageReferenceChild).child(product.getImage()).child("0").getBytes(TEN_MEGABYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+//                @Override
+//                public void onSuccess(byte[] bytes) {
+//    //                p0.imageView.setImageBitmap(categories.get(p1).imageBitmap);
+//    //                category.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+//    //                System.out.println("imagem salva!");
+//    //                adapter.notifyDataSetChanged();
+//
+//                    myViewHolder.ivAdapterProduct.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+//                }
+//            }).addOnFailureListener(new OnFailureListener() {
+//                @Override
+//                public void onFailure(@NonNull Exception e) {
+//                    System.out.println("Erro: imagem não carregada");
+//                }
+//            });*/
+//                storageReference.child("images").child()
+
+
+
+            //todo: adicionar informações de estoque
+        }
+
+
         return view;
     }
 
     ImageListener imageListener = new ImageListener() {
         @Override
-        public void setImageForPosition(int position, ImageView imageView) {
-            imageView.setImageResource(sampleImages[position]);
+        public void setImageForPosition(int position, final ImageView imageView) {
+
+            final long TEN_MEGABYTES = 10 * 1024 * 1024;
+
+            storageReference.child("images").child(storageReferenceChild).child(product.getImage()).child(String.valueOf(position)).getBytes(TEN_MEGABYTES).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    //                p0.imageView.setImageBitmap(categories.get(p1).imageBitmap);
+                    //                category.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                    //                System.out.println("imagem salva!");
+                    //                adapter.notifyDataSetChanged();
+                    imageView.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                    //myViewHolder.ivAdapterProduct.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(context,"Erro: imagem não carregada",Toast.LENGTH_SHORT);
+                    System.out.println("Erro: imagem não carregada");
+                }
+            });
+
+            //imageView.setImageResource(productImages[position]);
         }
     };
 
@@ -98,8 +185,9 @@ public class ProductFragment extends Fragment {
         popupMenu.show();
     }
 
-    public void setProduct(String product) {
+    public void setProduct(Product product) {
         this.product = product;
+
     }
 
 }

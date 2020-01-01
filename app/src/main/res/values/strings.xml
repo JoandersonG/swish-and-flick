@@ -45,4 +45,13 @@
         <item>Poção</item>
     </string-array>
 
+    <string name="booksPT">Livros</string>
+    <string name="clothingsPT">Vestimentas</string>
+    <string name="jewlryPT">Joias</string>
+    <string name="muggle_artifactsPT">Artefatos Trouxas</string>
+    <string name="potionsPT">Poções</string>
+    <string name="quidditchPT">Quadribol</string>
+    <string name="wizzard_artifactsPT">Artefatos Bruxos</string>
+    <string name="broomsticksPT">Vassouras</string>
+
 </resources>

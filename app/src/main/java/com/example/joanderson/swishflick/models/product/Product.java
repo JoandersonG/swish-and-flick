@@ -6,11 +6,12 @@ import android.support.annotation.Nullable;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 
 
-public abstract class Product {
+public abstract class Product implements Serializable {
     /*
     var magicProperties: ArrayList<String>//todo: isso d'aproblema?
     val isMagicProduct : Boolean
@@ -36,6 +37,19 @@ public abstract class Product {
     private ArrayList <String> magicProperties;
     private Cash price;
     private int stockAmount;
+    private String image;
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public Product() {
+
+    }
 
     public Product(String name, String description, Cash price, int stockAmount) {
         this.name = name;

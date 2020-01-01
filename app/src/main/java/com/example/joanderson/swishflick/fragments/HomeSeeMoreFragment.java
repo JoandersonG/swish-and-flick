@@ -13,6 +13,9 @@ import android.widget.TextView;
 import com.example.joanderson.swishflick.R;
 import com.example.joanderson.swishflick.adapters.ProductsAdapter;
 import com.example.joanderson.swishflick.interfaces.FragmentComunicator;
+import com.example.joanderson.swishflick.models.product.Product;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +37,7 @@ public class HomeSeeMoreFragment extends Fragment {
 
         rvProducts = view.findViewById(R.id.rvHomeSeeMore);
 
-        ProductsAdapter productsAdapter = new ProductsAdapter((FragmentComunicator) getActivity());
+        ProductsAdapter productsAdapter = new ProductsAdapter((FragmentComunicator) getActivity(),new ArrayList<Product>());
 
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),2);
         rvProducts.setLayoutManager(layoutManager);

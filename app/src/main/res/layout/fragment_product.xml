@@ -16,10 +16,9 @@
 
 
         <com.synnapps.carouselview.CarouselView
-            android:id="@+id/carouselViewProductImages"
+            android:id="@+id/cvProductImagesFragmentProduct"
             android:layout_width="match_parent"
             android:layout_height="412dp"
-            android:layout_marginTop="48dp"
             app:fillColor="#ffffff"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,24 +32,25 @@
 
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/tvTitleFragmentProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginTop="5dp"
             android:maxLines="1"
             android:text="Lembrol 15 cm D and M"
             android:textColor="@android:color/black"
             android:textSize="24sp"
             app:fontFamily="@font/actor"
-            app:layout_constraintTop_toBottomOf="@id/carouselViewProductImages"
+            app:layout_constraintTop_toBottomOf="@id/cvProductImagesFragmentProduct"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_editor_absoluteY="8dp" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/tvDescriptionProductFragment"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -62,7 +62,7 @@
             app:fontFamily="@font/actor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleFragmentProduct" />
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -76,7 +76,7 @@
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView8">
+            app:layout_constraintTop_toBottomOf="@+id/tvDescriptionProductFragment">
 
             <Button
                 android:id="@+id/btFragmentProductSize"
@@ -173,7 +173,7 @@
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="8dp"
             android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="@+id/textView3"
+            app:layout_constraintBottom_toBottomOf="@+id/tvTitleFragmentProduct"
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/ic_shopping_cart_black_24dp" />
 

@@ -14,6 +14,9 @@ import android.widget.EditText;
 import com.example.joanderson.swishflick.R;
 import com.example.joanderson.swishflick.adapters.ProductsAdapter;
 import com.example.joanderson.swishflick.interfaces.FragmentComunicator;
+import com.example.joanderson.swishflick.models.product.Product;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,7 +49,7 @@ public class SearchResultsFragment extends Fragment {
 
 
         //then I send my results to be shown:
-        ProductsAdapter productsAdapter = new ProductsAdapter((FragmentComunicator) getActivity());
+        ProductsAdapter productsAdapter = new ProductsAdapter((FragmentComunicator) getActivity(),new ArrayList<Product>());
         RecyclerView.LayoutManager layoutManager2 = new GridLayoutManager(getContext(),2);
         rvSearchResults.setLayoutManager(layoutManager2);
         rvSearchResults.setAdapter(productsAdapter);
