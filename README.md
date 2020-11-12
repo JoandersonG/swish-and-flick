@@ -1,4 +1,9 @@
-<h1 align="center">Swish&Flick</h1>
+
+<p align="center">
+  <img src="./logo/logo_nome_abaixo.png" alt="Logo">
+</p>
+<br>
+<br>
 
 ### Sobre
 Bruxos britânicos após a queda de Voldemort se tornaram muito mais próximos da comunidade trouxa como resposta natural de rechaçamento aos profundos ideias anti-trouxa dos seguidores do terrível lorde das trevas. Com isso, começaram a gozar de muitas das tecnologias e facilidades que a comunidade trouxa desenvolveu. Quando smartphones se tornaram febre na comunidade não-mágica, bruxos se renderam às facilidades desses dispositivos engenhosos. Observando esse nicho de mercado surgiu o Swish&Flick, um aplicativo de compra online de diversos artigos mágicos. Compre tudo o que poderia encontrar na loja física. Nenhum swish ou flick é necessário. Aproveite.
